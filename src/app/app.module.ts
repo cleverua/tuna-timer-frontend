@@ -15,15 +15,25 @@ import { PersistenceService } from './services/persistence.service';
 import { CurrentUserActions } from './actions/current-user.actions';
 import { ArticlesActions } from './actions/articles.actions';
 
+import { routing } from "./app.routing";
+
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
+import { ActivateComponent } from './users/activate/activate.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DashboardComponent,
+    HomeComponent,
+    ActivateComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    NgReduxModule
+    NgReduxModule,
+    routing
   ],
   providers: [
     PersistenceService,
