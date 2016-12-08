@@ -1,6 +1,7 @@
+import { User } from "./users/user";
 export class AppState {
 
-    currentUser: any;
+    currentUser: User;
     articles: any;
 
     constructor() {

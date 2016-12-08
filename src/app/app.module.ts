@@ -12,6 +12,7 @@ import { rootReducer } from './store/index';
 
 import { ApiService } from './services/api.service';
 import { PersistenceService } from './services/persistence.service';
+import { AuthenticationService } from './services/authentication.service';
 import { CurrentUserActions } from './actions/current-user.actions';
 import { ArticlesActions } from './actions/articles.actions';
 
@@ -32,12 +33,13 @@ import { ActivateComponent } from './users/activate/activate.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    NgReduxModule,
+    NgReduxModule.forRoot(),
     routing
   ],
   providers: [
     PersistenceService,
     ApiService,
+    AuthenticationService,
     CurrentUserActions,
     ArticlesActions
   ],
