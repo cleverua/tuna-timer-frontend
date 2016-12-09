@@ -11,7 +11,7 @@ export class AuthenticationService {
 
   constructor(private http: Http) { }
 
-  getToken(pid): Observable<any> {
+  getToken(pid: string): Observable<any> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

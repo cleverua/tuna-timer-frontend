@@ -2,6 +2,7 @@ export class User {
   public name: string;
   public id: string;
   public teamId: string;
+  public extTeamName: string;
   public imageUrl: string;
   public isAdmin: boolean;
 
@@ -11,6 +12,7 @@ export class User {
       this.name = userData.name;
       this.id = userData.user_id;
       this.teamId = userData.team_id;
+      this.extTeamName = userData.ext_team_name;
       this.imageUrl = userData.image48;
       this.isAdmin = userData.is_team_admin;
       this.jwt = jwt;

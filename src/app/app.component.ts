@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgRedux } from 'ng2-redux';
 import { AppState } from './app.state';
 import { ArticlesState } from './store/articles.reducer';
-import { CurrentUserActions } from './actions/current-user.actions';
+import { UserActions } from './actions/user.actions';
 import { ArticlesActions } from './actions/articles.actions';
-import { User } from "./users/user";
+import { User } from "./models/user";
 
 @Component({
   selector: 'app-root',
@@ -14,16 +14,17 @@ import { User } from "./users/user";
 export class AppComponent implements OnInit {
   currentUser: User;
   articles: ArticlesState;
+  usersList: User[];
 
   constructor(
     private ngRedux: NgRedux<AppState>,
-    private userActions: CurrentUserActions,
+    private userActions: UserActions,
     private articlesActions: ArticlesActions) {}
 
   ngOnInit() {
     console.log("APP COMPONENT#OnInit")
-    // this.ngRedux.select('currentUser').forEach(s => this.currentUser = ((s as User)));
-    // this.ngRedux.select('articles').forEach(s => this.articles = ((s as ArticlesState)));
+    this.ngRedux.select('currentUser').forEach(s => this.currentUser = ((s as User)));
+    this.ngRedux.select('usersList').forEach(s => this.usersList = ((s as User[])));
 
     // TODO: dispatch next event only after data gathering (current user data, user tasks)
     window.document.dispatchEvent(new Event('application-bootstrap-done'));

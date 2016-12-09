@@ -8,12 +8,12 @@ import { createStore } from 'redux';
 
 import { AppState } from './app.state';
 import { AppComponent } from './app.component';
-import { rootReducer } from './store/index';
+import { rootReducer } from './store/root.reducer';
 
 import { ApiService } from './services/api.service';
 import { PersistenceService } from './services/persistence.service';
 import { AuthenticationService } from './services/authentication.service';
-import { CurrentUserActions } from './actions/current-user.actions';
+import { UserActions } from './actions/user.actions';
 import { ArticlesActions } from './actions/articles.actions';
 
 import { routing } from "./app.routing";
@@ -27,7 +27,7 @@ import { ActivateComponent } from './users/activate/activate.component';
     AppComponent,
     DashboardComponent,
     HomeComponent,
-    ActivateComponent
+    ActivateComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +40,7 @@ import { ActivateComponent } from './users/activate/activate.component';
     PersistenceService,
     ApiService,
     AuthenticationService,
-    CurrentUserActions,
+    UserActions,
     ArticlesActions
   ],
   bootstrap: [AppComponent]

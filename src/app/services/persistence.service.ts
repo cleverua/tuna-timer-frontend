@@ -24,5 +24,4 @@ export class PersistenceService {
     console.log('PersistenceService#purge: ', this.persistor);
     this.persistor.purge(undefined);
   }
-
 }
