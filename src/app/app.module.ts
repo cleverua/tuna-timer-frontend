@@ -14,12 +14,16 @@ import { ApiService } from './services/api.service';
 import { PersistenceService } from './services/persistence.service';
 import { CurrentUserActions } from './actions/current-user.actions';
 import { ArticlesActions } from './actions/articles.actions';
-import { TrackingButtonComponent } from './components/status/tracking-button/tracking-button.component';
+import { TrackingButtonComponent } from './components/today-status/tracking-button/tracking-button.component';
+import { TaskAreaComponent } from './components/today-status/task-area/task-area.component';
+import { TodayStatusComponent } from './components/today-status/today-status.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TrackingButtonComponent
+    TrackingButtonComponent,
+    TaskAreaComponent,
+    TodayStatusComponent
   ],
   imports: [
     BrowserModule,

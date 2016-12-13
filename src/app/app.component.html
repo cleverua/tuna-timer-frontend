@@ -1,22 +1,83 @@
-
-<!--<h3>User:</h3>-->
-<!--<div>-->
-  <!--<div>ID: {{currentUser?.id}}</div>-->
-  <!--<div>Is Admin: {{currentUser?.isAdmin}}</div>-->
-  <!--<div>Timezone: {{currentUser?.timezone}}</div>-->
-<!--</div>-->
-<!---->
-<!--<div>-->
-  <!--<button (click)="setUserTimezone()">Set User Time Zone</button>-->
-<!--</div>-->
-<!---->
-<!--<div>-->
-  <!--<button (click)="fetchArticles()">Fetch Articles</button>-->
-<!--</div>-->
-<!---->
-<!--<div>Articles: (fetch status: {{articles?.fetchStatus}} / {{articles?.fetchedAt}})</div>-->
-<!---->
-<!--<pre>-->
-  <!--{{articles?.data?.query?.results?.channel?.location?.country}}-->
-<!--</pre>-->
-<app-tracking-button></app-tracking-button>
+<header class="header">
+  <div class="header_container header_container-desctop">
+    <div class="header__col header__col-left">
+      <div class="header__logo col-3">
+        <img src="../assets/img/TunaTimer.png" alt="">
+      </div>
+      <nav class="header__nav col-3">
+        <ul>
+          <li class="header__nav-active"><a href="#">Status</a></li>
+          <li><a href="report-month.html">Report</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header__col header__col-right">
+      <div class="header__user">
+        <form>
+          <select>
+            <option>@ Sergey_Sokolenko</option>
+            <option>@ Artem_Zhuravlev</option>
+            <option>@ Ivan_Ivanov</option>
+          </select>
+        </form>
+      </div>
+      <div class="header__hour">
+        <p>Your total for today</p>
+        <h5>8:30 <span>h</span></h5>
+      </div>
+      <div class="header__task">
+        <button class="header__task_btn">ADD NEW TASK</button>
+      </div>
+    </div>
+  </div>
+  <div class="header_container header_container-mobile">
+    <div class="header__col header__col-left">
+      <div class="header__logo col-3">
+        <img src="img/Tuna.svg" alt="">
+      </div>
+      <nav class="header__nav col-3">
+        <ul>
+          <li class="header__nav-active"><a href="#">Status</a></li>
+          <li><a href="report-month.html">Report</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="header__col header__col-right">
+      <div class="header__user">
+        <form>
+          <select>
+            <option>@ Sergey_Sokolenko</option>
+            <option>@ Artem_Zhuravlev</option>
+            <option>@ Ivan_Ivanov</option>
+          </select>
+        </form>
+      </div>
+      <div class="header__hour">
+        <p>Your total for today</p>
+        <h5>8:30 <span>h</span></h5>
+      </div>
+      <div class="header__task">
+        <button class="header__task_btn"></button>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main">
+  <div class="main-tabs">
+    <div class="container">
+      <nav class="main-tabs__nav">
+        <ul>
+          <li><a href="status-prev.html">previous working day</a></li>
+          <li class="main-tabs__nav-active"><a href="#">TODAY</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div class="main-date">
+    <div class="container">
+      <h6>Monday October 19</h6>
+    </div>
+  </div>
+  <app-today-status></app-today-status>
+  <!--<app-task-area></app-task-area>-->
+</main>

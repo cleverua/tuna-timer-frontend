@@ -1,2 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 @import url("assets/css/style.css");
+@import url("assets/css/bootstrap.css");
+@import url("assets/css/jquery.formstyler.css");
+@import url("assets/css/jquery-ui.structure.css");
