@@ -19,14 +19,15 @@ export class UserActions {
     );
   }
 
-  setCurrentUser(user: User) {
-    console.log('UserActions#setUser:', user);
+  setCurrentUser(jwt: string) {
+    let user = new User(jwt);
     this.ngRedux.dispatch(
         {type: UserActions.SET_USER, payload: {currentUser: user}}
     );
   }
 
-  addNewUser(user: User) {
+  addNewUser(jwt) {
+    let user = new User(jwt);
     this.ngRedux.dispatch(
         {type: UserActions.ADD_NEW_USER, payload: {user: user}}
     )

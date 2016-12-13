@@ -7,9 +7,7 @@ const initialState = [];
 export function usersListReducer(state: User[] = initialState, action: any) {
   switch (action.type) {
     case REHYDRATE:
-      console.log('UsersListReducer#REHYDRATE userList');
       let users = action.payload.usersList;
-      console.log(action);
       return users ? users : state;
     case UserActions.ADD_NEW_USER:
       console.log('UsersListReducer#ADD_NEW_USER');

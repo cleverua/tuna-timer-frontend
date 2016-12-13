@@ -26,6 +26,33 @@
       <a [routerLink]="['']">Home</a> |
       <a [routerLink]="['dashboard']">Dashboard</a>
       <hr>
+
+      <div>
+        <img [src]="currentUser?.imageUrl" alt="no image">
+        <h2>Current user</h2>
+        <span>User Name: </span>
+        <span>{{ currentUser?.name }}</span>
+      </div>
+      <div>
+        <span>User id:</span>
+        <span>{{ currentUser?.id }}</span>
+      </div>
+      <div>
+        <span>Team name:</span>
+        <span>{{ currentUser?.extTeamName }}</span>
+      </div>
+      <div>
+        <span>Team id:</span>
+        <span>{{ currentUser?.teamId }}</span>
+      </div>
+
+
+      <hr>
+      <div>SELECT CURRENT USER</div>
+      <select (change)="userChange($event.target.value)">
+        <option *ngFor="let user of usersList" [selected]="currentUser.id == user.id">{{user.name}}</option>
+      </select>
+
       <router-outlet></router-outlet>
     </div>
   </div>

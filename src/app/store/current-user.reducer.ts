@@ -5,9 +5,7 @@ import { User } from "../models/user";
 export function currentUserReducer(state: User = null, action: any) {
   switch (action.type) {
     case REHYDRATE:
-      console.log('currentUserReducer#REHYDRATE CURRENT USER');
       let user = action.payload.currentUser;
-      console.log(action);
       return user ? Object.assign({}, user) : state;
     case UserActions.SET_TIMEZONE:
       console.log('currentUserReducer#SET_TIMEZONE');
