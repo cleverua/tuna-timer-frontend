@@ -14,16 +14,18 @@ import { ApiService } from './services/api.service';
 import { PersistenceService } from './services/persistence.service';
 import { CurrentUserActions } from './actions/current-user.actions';
 import { ArticlesActions } from './actions/articles.actions';
+import { TrackingButtonComponent } from './components/status/tracking-button/tracking-button.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TrackingButtonComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    NgReduxModule
+    NgReduxModule.forRoot(),
   ],
   providers: [
     PersistenceService,
