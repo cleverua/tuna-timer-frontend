@@ -1,58 +1,9 @@
-
-<!--<h3>User:</h3>-->
-<!--<div>-->
-  <!--<div>ID: {{currentUser?.id}}</div>-->
-  <!--<div>Is Admin: {{currentUser?.isAdmin}}</div>-->
-  <!--<div>Timezone: {{currentUser?.timezone}}</div>-->
-<!--</div>-->
-
-<!--<div>-->
-  <!--<button (click)="setUserTimezone()">Set User Time Zone</button>-->
-<!--</div>-->
-
-<!--<div>-->
-  <!--<button (click)="fetchArticles()">Fetch Articles</button>-->
-<!--</div>-->
-
-<!--<div>Articles: (fetch status: {{articles?.fetchStatus}} / {{articles?.fetchedAt}})</div>-->
-
-<!--<pre>-->
-  <!--{{articles?.data?.query?.results?.channel?.location?.country}}-->
-<!--</pre>-->
-
 <div class="container">
   <div class="row">
     <div class="col-md-10">
       <a [routerLink]="['']">Home</a> |
       <a [routerLink]="['dashboard']">Dashboard</a>
       <hr>
-
-      <div>
-        <img [src]="currentUser?.imageUrl" alt="no image">
-        <h2>Current user</h2>
-        <span>User Name: </span>
-        <span>{{ currentUser?.name }}</span>
-      </div>
-      <div>
-        <span>User id:</span>
-        <span>{{ currentUser?.id }}</span>
-      </div>
-      <div>
-        <span>Team name:</span>
-        <span>{{ currentUser?.extTeamName }}</span>
-      </div>
-      <div>
-        <span>Team id:</span>
-        <span>{{ currentUser?.teamId }}</span>
-      </div>
-
-
-      <hr>
-      <div>SELECT CURRENT USER</div>
-      <select (change)="userChange($event.target.value)">
-        <option *ngFor="let user of usersList" [selected]="currentUser.id == user.id">{{user.name}}</option>
-      </select>
-
       <router-outlet></router-outlet>
     </div>
   </div>

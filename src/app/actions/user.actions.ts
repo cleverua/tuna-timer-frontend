@@ -19,8 +19,7 @@ export class UserActions {
     );
   }
 
-  setCurrentUser(jwt: string) {
-    let user = new User(jwt);
+  setCurrentUser(user: User) {
     this.ngRedux.dispatch(
         {type: UserActions.SET_USER, payload: {currentUser: user}}
     );

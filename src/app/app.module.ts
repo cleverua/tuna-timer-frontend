@@ -20,7 +20,9 @@ import { routing } from "./app.routing";
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
-import { ActivateComponent } from './users/activate/activate.component';
+import { ActivateComponent } from './components/users/activate/activate.component';
+import { TeamsComponent } from './components/teams/teams.component';
+import { ErrorsComponent } from './components/errors/errors.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ActivateComponent } from './users/activate/activate.component';
     DashboardComponent,
     HomeComponent,
     ActivateComponent,
+    TeamsComponent,
+    ErrorsComponent,
   ],
   imports: [
     BrowserModule,
