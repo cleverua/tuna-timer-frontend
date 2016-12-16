@@ -37,6 +37,7 @@
           // completed (based on the known transition time).
           setTimeout(
               function removeLoadingScreen() {
+                  document.removeEventListener("application-bootstrap-done", handleAppReady, false);
                   preBootstrapContainer.parentNode.removeChild(preBootstrapContainer);
               },
               300

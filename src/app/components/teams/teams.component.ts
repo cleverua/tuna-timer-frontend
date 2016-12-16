@@ -14,20 +14,24 @@ import { AuthenticationService } from "../../services/authentication.service";
 export class TeamsComponent implements OnInit {
   currentUser: User;
 
-  constructor(private ngRedux: NgRedux<AppState>, private router: Router, private authService: AuthenticationService,) { }
+  constructor(private ngRedux: NgRedux<AppState>, private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit() {
     console.log("TEAMS_COMPONENT#OnInit");
-    //TODO load Users tasks after validation
 
     this.ngRedux.select('currentUser').forEach((user: User) => {
       this.currentUser = user;
 
       if (this.currentUser) {
-        this.authService.validateToken(this.currentUser.jwt).subscribe(response => {
-          this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
-        },
-          err  => this.router.navigate(['/errors', err]));
+        //TODO load Users tasks
+        this.authService.validateToken(this.currentUser.jwt).subscribe(
+          resp => {
+            this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
+          },
+          err  => {
+            this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+          }
+        );
       }
     });
   }

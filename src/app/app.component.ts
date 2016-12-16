@@ -6,6 +6,8 @@ import { AppState } from './app.state';
 import { User } from "./models/user";
 import { BootstrapItem } from "./models/bootstrap/bootstrap-item";
 import { BootstrapProgress } from "./models/bootstrap/bootstrap-progress";
+import { AppErrorService } from "./services/app-error.service";
+import { AppError } from "./models/app-error";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,7 @@ import { BootstrapProgress } from "./models/bootstrap/bootstrap-progress";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private ngRedux: NgRedux<AppState>, private router: Router) {}
+  constructor(private ngRedux: NgRedux<AppState>, private router: Router, private errorService: AppErrorService) {}
 
   ngOnInit() {
     this.ngRedux.select('bootstrapItems').forEach(b => {
@@ -26,13 +28,19 @@ export class AppComponent implements OnInit {
           if (user) {
             this.router.navigate(['/teams', user.teamId]);
           } else {
-            this.router.navigate(['/errors', 400]);
+            this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: 400});
           }
         });
       }
 
       if (bootstrapProgress.isCompleted()) {
         window.document.dispatchEvent(new Event('application-bootstrap-done'));
+      }
+    });
+
+    this.ngRedux.select('appError').forEach((error: AppError) => {
+      if (error) {
+        this.errorService.handleError(error);
       }
     });
   }

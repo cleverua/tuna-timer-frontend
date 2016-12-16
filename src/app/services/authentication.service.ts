@@ -4,6 +4,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw'
+import { AppError } from "../models/app-error";
 
 @Injectable()
 export class AuthenticationService {
@@ -34,10 +35,12 @@ export class AuthenticationService {
   }
 
   private handleError(err: any) {
-    let errMsg = (err.message) ? err.message : err.status ? `${err.status} - ${err.statusText}` : 'Server error';
     if(err.status === 401 || err.status === 404) {
-      return Observable.throw(err.status);
+      let error = new AppError(err.status, err.statusText)
+      return Observable.throw(error);
     }
+
+    let errMsg = (err.message) ? err.message : err.status ? `${err.status} - ${err.statusText}` : 'Server error';
     return Observable.throw(errMsg);
   }
 }

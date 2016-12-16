@@ -18,16 +18,15 @@ import { ArticlesActions } from './actions/articles.actions';
 
 import { routing } from "./app.routing";
 
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { ActivateComponent } from './components/users/activate/activate.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { ErrorsComponent } from './components/errors/errors.component';
+import { AppErrorService } from "./services/app-error.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     HomeComponent,
     ActivateComponent,
     TeamsComponent,
@@ -45,7 +44,8 @@ import { ErrorsComponent } from './components/errors/errors.component';
     ApiService,
     AuthenticationService,
     UserActions,
-    ArticlesActions
+    ArticlesActions,
+    AppErrorService
   ],
   bootstrap: [AppComponent]
 })
