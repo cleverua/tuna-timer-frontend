@@ -15,7 +15,7 @@ import { Subscription } from "rxjs";
   styleUrls: ['activate.component.css']
 })
 export class ActivateComponent implements OnInit, OnDestroy {
-  private bootstrapItems: Subscription;
+  private subscription: Subscription;
 
   constructor(
     private ngRedux: NgRedux<AppState>,
@@ -25,18 +25,17 @@ export class ActivateComponent implements OnInit, OnDestroy {
     private userActions: UserActions) {}
 
   ngOnInit() {
-    this.bootstrapItems = this.ngRedux.select('bootstrapItems').subscribe((items: BootstrapItem[]) => {
-      let rehydrated = items.filter(i => { return i.name == "redux-store-rehydrated" })[0];
-
-      if (rehydrated.isLoaded()) {
-        let pid = this.activateRoute.snapshot.queryParams['pid'];
-        this.authService.getToken(pid).subscribe(response => this.setUserByPid(response));
-      }
+    this.subscription = this.ngRedux.select(state=>state.bootstrapItems.filter(i => i.name == "redux-store-rehydrated")[0])
+      .subscribe((rehydrated: BootstrapItem) => {
+        if (rehydrated.isLoaded()) {
+          let pid = this.activateRoute.snapshot.queryParams['pid'];
+          this.authService.getToken(pid).subscribe(response => this.setUserByPid(response));
+        }
     });
   }
 
   ngOnDestroy(){
-    this.bootstrapItems.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   private setUserByPid(response) {
@@ -47,7 +46,7 @@ export class ActivateComponent implements OnInit, OnDestroy {
       this.router.navigate(['/teams', user.teamId]);
     } else {
       console.log("Errors:", response.errors);
-      this.router.navigate(['/errors']);
+      this.router.navigate(['/errors', 400]);
     }
   }
 }

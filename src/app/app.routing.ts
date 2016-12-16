@@ -11,7 +11,8 @@ const APP_ROUTES: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'activate_user', component: ActivateComponent },
   { path: 'teams/:id', component: TeamsComponent },
-  { path: 'errors', component: ErrorsComponent },
+  { path: 'errors/:status', component: ErrorsComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

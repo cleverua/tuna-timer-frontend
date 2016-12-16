@@ -22,11 +22,11 @@ export class AppComponent implements OnInit {
       let rehydrated = items.filter(i => { return i.name == "redux-store-rehydrated" })[0];
 
       if (window.location.pathname != "/activate_user" && rehydrated.isLoaded()) {
-        this.ngRedux.select('currentUser').forEach((user: User) => {
+        this.ngRedux.select('currentUser').subscribe((user: User) => {
           if (user) {
             this.router.navigate(['/teams', user.teamId]);
           } else {
-            this.router.navigate(['/errors']);
+            this.router.navigate(['/errors', 400]);
           }
         });
       }

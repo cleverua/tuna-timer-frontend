@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw'
 
 @Injectable()
 export class AuthenticationService {
@@ -20,6 +21,13 @@ export class AuthenticationService {
       .catch(this.handleError);
   }
 
+  validateToken(jwt: string): Observable<any> {
+    let headers = new Headers({'Authorization': 'Bearer ' + jwt});
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(AuthenticationService.validationUrl, options).map(s => {return s.status}).catch(this.handleError);
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || { };
@@ -27,7 +35,9 @@ export class AuthenticationService {
 
   private handleError(err: any) {
     let errMsg = (err.message) ? err.message : err.status ? `${err.status} - ${err.statusText}` : 'Server error';
-    console.error(errMsg);
+    if(err.status === 401 || err.status === 404) {
+      return Observable.throw(err.status);
+    }
     return Observable.throw(errMsg);
   }
 }
