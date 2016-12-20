@@ -23,10 +23,11 @@ export class TeamsComponent implements OnInit {
       this.currentUser = user;
 
       if (this.currentUser) {
-        //TODO load Users tasks
-        this.authService.validateToken(this.currentUser.jwt).subscribe(
+        //TODO load Users tasks and place it to the store
+        this.authService.getTasks(this.currentUser.jwt).subscribe(
           resp => {
             this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
+            console.log("TASKS:", resp);
           },
           err  => {
             this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
