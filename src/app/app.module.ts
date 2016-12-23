@@ -12,13 +12,10 @@ import { rootReducer } from './store/root.reducer';
 
 import { ApiService } from './services/api.service';
 import { PersistenceService } from './services/persistence.service';
-import { AuthenticationService } from './services/authentication.service';
 import { UserActions } from './actions/user.actions';
-import { ArticlesActions } from './actions/articles.actions';
 
 import { routing } from "./app.routing";
 
-import { HomeComponent } from './home/home.component';
 import { ActivateComponent } from './components/users/activate/activate.component';
 import { TeamsComponent } from './components/teams/teams.component';
 import { ErrorsComponent } from './components/errors/errors.component';
@@ -27,7 +24,6 @@ import { AppErrorService } from "./services/app-error.service";
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     ActivateComponent,
     TeamsComponent,
     ErrorsComponent,
@@ -42,9 +38,7 @@ import { AppErrorService } from "./services/app-error.service";
   providers: [
     PersistenceService,
     ApiService,
-    AuthenticationService,
     UserActions,
-    ArticlesActions,
     AppErrorService
   ],
   bootstrap: [AppComponent]

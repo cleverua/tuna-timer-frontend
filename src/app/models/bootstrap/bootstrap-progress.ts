@@ -12,13 +12,4 @@ export class BootstrapProgress {
     }
     return true;
   }
-
-  getError(): string {
-    for (let item of this.items) {
-      if (item.isErrored()) {
-        return item.getErrorMessage();
-      }
-    }
-    return null;
-  }
 }

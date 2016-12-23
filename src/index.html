@@ -29,6 +29,7 @@
       document.addEventListener("application-bootstrap-done", handleAppReady);
       // I handle the "appready" event and teardown the loading screen.
       function handleAppReady(event) {
+          document.removeEventListener("application-bootstrap-done", handleAppReady, false);
           var preBootstrapContainer = document.getElementById("pre-bootstrap-container");
           var preBootstrap = document.getElementById("pre-bootstrap");
           // Add the class-name to initiate the transitions.
@@ -37,7 +38,6 @@
           // completed (based on the known transition time).
           setTimeout(
               function removeLoadingScreen() {
-                  document.removeEventListener("application-bootstrap-done", handleAppReady, false);
                   preBootstrapContainer.parentNode.removeChild(preBootstrapContainer);
               },
               300

@@ -1,6 +1,6 @@
 export class BootstrapItem {
+  static STATUS_LOADING: string = 'LOADING';
   static STATUS_LOADED: string = 'DONE';
-  static STATUS_ERROR: string = 'ERROR';
 
   constructor(public name: string, private status: string = "", private error: string = "") { }
 
@@ -8,24 +8,19 @@ export class BootstrapItem {
     return this.name;
   }
 
+  isLoading() {
+    return this.status === BootstrapItem.STATUS_LOADING;
+  }
+
   isLoaded() {
     return this.status === BootstrapItem.STATUS_LOADED;
   }
 
-  isErrored() {
-    return this.status === BootstrapItem.STATUS_ERROR;
+  setLoading() {
+    this.status = BootstrapItem.STATUS_LOADING;
   }
 
   setLoaded() {
     this.status = BootstrapItem.STATUS_LOADED;
-  }
-
-  setErrored(errorMessage: string) {
-    this.status = BootstrapItem.STATUS_ERROR;
-    this.error = errorMessage;
-  }
-
-  getErrorMessage() {
-    return this.error;
   }
 }

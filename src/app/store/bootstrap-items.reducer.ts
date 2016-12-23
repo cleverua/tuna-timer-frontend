@@ -18,6 +18,18 @@ export function bootstrapItemsReducer(state: BootstrapItem[] = initialState, act
         }
       }
       return state;
+    case 'BOOTSTRAP_ITEM_LOADING':
+      //TODO refactor duplicated code
+      console.log('bootstrapItemsReducer#BOOTSTRAP_ITEM_LOADING', action.itemName);
+      for (let i = 0; i < state.length; i++) {
+        let item: BootstrapItem = state[i];
+        if (item.getName() === action.itemName) {
+          let replacement = new BootstrapItem(action.itemName);
+          replacement.setLoading();
+          return [...state.slice(0, i), replacement, ...state.slice(i + 1)];
+        }
+      }
+      return state;
     default:
       return state;
   }

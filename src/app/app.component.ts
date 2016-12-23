@@ -15,22 +15,27 @@ import { AppError } from "./models/app-error";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  private currentUser: User;
+
   constructor(private ngRedux: NgRedux<AppState>, private router: Router, private errorService: AppErrorService) {}
 
   ngOnInit() {
-    this.ngRedux.select('bootstrapItems').forEach(b => {
-      let items = (b as BootstrapItem[]);
-      let bootstrapProgress = new BootstrapProgress(items);
-      let rehydrated = items.filter(i => { return i.name == "redux-store-rehydrated" })[0];
+    console.log("APP_COMPONENT#ON_INIT");
 
-      if (window.location.pathname != "/activate_user" && rehydrated.isLoaded()) {
-        this.ngRedux.select('currentUser').subscribe((user: User) => {
-          if (user) {
-            this.router.navigate(['/teams', user.teamId]);
-          } else {
-            this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: 400});
-          }
-        });
+    this.ngRedux.select('currentUser').subscribe((user: User) => this.currentUser = user);
+
+    this.ngRedux.select('bootstrapItems').forEach((items: BootstrapItem[]) => {
+      let bootstrapProgress = new BootstrapProgress(items);
+      let rehydratedProgress = items.filter(i => { return i.name == "redux-store-rehydrated" })[0];
+      let userProgress = items.filter(i => { return i.name == "load-user" })[0];
+
+      if (!userProgress.isLoading() && rehydratedProgress.isLoaded()) {
+        if (this.currentUser) {
+          this.router.navigate(['/teams', this.currentUser.teamId]);
+        } else {
+          let error = new AppError(400, "please login from Slack application");
+          this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: error});
+        }
       }
 
       if (bootstrapProgress.isCompleted()) {
