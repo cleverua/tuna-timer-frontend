@@ -8,28 +8,38 @@ import { createStore } from 'redux';
 
 import { AppState } from './app.state';
 import { AppComponent } from './app.component';
-import { rootReducer } from './store/index';
+import { rootReducer } from './store/root.reducer';
 
 import { ApiService } from './services/api.service';
 import { PersistenceService } from './services/persistence.service';
-import { CurrentUserActions } from './actions/current-user.actions';
-import { ArticlesActions } from './actions/articles.actions';
+import { UserActions } from './actions/user.actions';
+
+import { routing } from "./app.routing";
+
+import { ActivateComponent } from './components/users/activate/activate.component';
+import { TeamsComponent } from './components/teams/teams.component';
+import { ErrorsComponent } from './components/errors/errors.component';
+import { AppErrorService } from "./services/app-error.service";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ActivateComponent,
+    TeamsComponent,
+    ErrorsComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    NgReduxModule
+    NgReduxModule.forRoot(),
+    routing
   ],
   providers: [
     PersistenceService,
     ApiService,
-    CurrentUserActions,
-    ArticlesActions
+    UserActions,
+    AppErrorService
   ],
   bootstrap: [AppComponent]
 })

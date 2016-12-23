@@ -1,21 +1,9 @@
-
-<h3>User:</h3>
-<div>
-  <div>ID: {{currentUser?.id}}</div>
-  <div>Is Admin: {{currentUser?.isAdmin}}</div>
-  <div>Timezone: {{currentUser?.timezone}}</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <a [routerLink]="['']">Home</a> |
+      <hr>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
-
-<div>
-  <button (click)="setUserTimezone()">Set User Time Zone</button>
-</div>
-
-<div>
-  <button (click)="fetchArticles()">Fetch Articles</button>
-</div>
-
-<div>Articles: (fetch status: {{articles?.fetchStatus}} / {{articles?.fetchedAt}})</div>
-
-<pre>
-  {{articles?.data?.query?.results?.channel?.location?.country}}
-</pre>
