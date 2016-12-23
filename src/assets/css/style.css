@@ -134,7 +134,7 @@ textarea{
 .header__nav ul li{
     display: inline-block;
     margin-right: 24px;
-    line-height: 3.889; 
+    line-height: 3.889;
 }
 .header__nav ul li a{
     font-size: 18px;
@@ -159,7 +159,7 @@ textarea{
 .header__admin{
     float: right;
     height: 50px;
-    margin: 10px 0; 
+    margin: 10px 0;
 }
 .header__admin{
     padding: 12px 42px 0 470px;
@@ -215,7 +215,7 @@ textarea{
     margin-right: 10px;
     width: 22px;
     height: 23px;
-    background: url(../img/alarm.svg)no-repeat;  
+    background: url(../img/alarm.svg)no-repeat;
     vertical-align: -2px;
 }
 .header__hour h5 span{
@@ -270,7 +270,7 @@ textarea{
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    color: #9b9b9b; 
+    color: #9b9b9b;
 }
 .main-tabs__nav .main-tabs__nav-active a{
     padding-bottom: 8px;
@@ -318,7 +318,7 @@ textarea{
 .main-task__item-active{
     position: relative;
     border: 1px solid #4990e2;
-    box-shadow: 0 3px 4px 0 #4990e2; 
+    box-shadow: 0 3px 4px 0 #4990e2;
 }
 .main-task__item textarea[name="text"]{
     width: 400px;
@@ -329,7 +329,7 @@ textarea{
     font-family: 'Lato', sans-serif;
     background: transparent;
     border: none;
-    border-bottom: 1px solid #4990e2; 
+    border-bottom: 1px solid #4990e2;
     color: #4a4a4a;
     outline: none;
     resize: none;
@@ -456,7 +456,7 @@ textarea{
     font-size: 16px;
     text-align: right;
     vertical-align: middle;
-    color: #9b9b9b; 
+    color: #9b9b9b;
 }
 .footer{
     height: 60px;
@@ -528,8 +528,8 @@ textarea{
     text-align: center;
 }
 .main-date .jq-selectbox__select{
-    width: 204px;  
-    padding: 0; 
+    width: 204px;
+    padding: 0;
 }
 .main-date .jq-selectbox li{
     font-size: 16px;
@@ -741,7 +741,7 @@ tr .table-last{
 }
 #myModal .modal-content,
 #myModal2 .modal-content{
-    border-radius: 0; 
+    border-radius: 0;
 }
 #myModal .modal-body,
 #myModal2 .modal-body{
@@ -1010,7 +1010,7 @@ tr .table-last{
     display: inline-block;
     transition: .3s;
     background: #1c3f68;
-    
+
 }
 .calendar-week__top ul li a{
     display: block;
@@ -1074,7 +1074,7 @@ tr .table-last{
     color: #1c3f68;
     border-radius: 50%;
     background: #fff;
-    
+
 }
 .calendar-week__calendar-week-last{
     border-right: none;
@@ -1106,7 +1106,7 @@ tr .table-last{
 .calendar-week__event-desc h5{
     color: #fff;
     font-size: 12px;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
     margin-top: 5px;
 }
 .event-btn-blue,
