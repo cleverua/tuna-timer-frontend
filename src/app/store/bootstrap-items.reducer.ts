@@ -2,7 +2,8 @@ import { BootstrapItem } from "../models/bootstrap/bootstrap-item";
 
 const initialState = [
   new BootstrapItem('redux-store-rehydrated'),
-  new BootstrapItem('load-user')
+  new BootstrapItem('load-user'),
+  new BootstrapItem('load-tasks'),
 ];
 
 export function bootstrapItemsReducer(state: BootstrapItem[] = initialState, action: any) {

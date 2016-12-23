@@ -1,12 +1,12 @@
 import { User } from "./models/user";
 import { BootstrapItem } from "./models/bootstrap/bootstrap-item";
 import { AppError } from "./models/app-error";
+import { Timer } from "./models/timer";
 
 export class AppState {
 
     currentUser: User;
-    articles: any;
-    usersList: User[];
+    timers: Timer[];
     bootstrapItems: BootstrapItem[];
     appError: AppError;
 

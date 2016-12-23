@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AppState } from "../../app.state";
 import { User } from "../../models/user";
 import { ApiService } from "../../services/api.service";
-import {AppError} from "../../models/app-error";
+import { Timer } from "../../models/timer";
 
 @Component({
   selector: 'app-team',
@@ -13,22 +13,26 @@ import {AppError} from "../../models/app-error";
   styleUrls: ['teams.component.css']
 })
 export class TeamsComponent implements OnInit {
-  currentUser: User;
+  private currentUser: User;
+  private timers: Timer[];
 
   constructor(private ngRedux: NgRedux<AppState>, private router: Router, private authService: ApiService) { }
 
   ngOnInit() {
     console.log("TEAMS_COMPONENT#OnInit");
+    this.ngRedux.select('timers').subscribe((timers: Timer[]) => this.timers = timers);
 
-    this.ngRedux.select('currentUser').forEach((user: User) => {
+    this.ngRedux.select('currentUser').subscribe((user: User) => {
       this.currentUser = user;
 
       if (this.currentUser) {
         this.authService.getTasks(this.currentUser.jwt).subscribe(
-          resp => {
-            //TODO place Timers to the store, dispatch bootstrap tasks completed
-            console.log("TASKS:", resp);
+          data => {
+            let timers: Timer[] = data.map(t => { return new Timer(t) });
+
+            this.ngRedux.dispatch({ type: 'SET_TIMERS', timers: timers});
             this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
+            this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-tasks'});
           },
           err  => {
             this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
