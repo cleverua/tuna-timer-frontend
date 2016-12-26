@@ -20,6 +20,7 @@ import { ActivateComponent } from './components/users/activate/activate.componen
 import { TeamsComponent } from './components/teams/teams.component';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { AppErrorService } from "./services/app-error.service";
+import { TimerFormComponent } from './components/timer-form/timer-form.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AppErrorService } from "./services/app-error.service";
     ActivateComponent,
     TeamsComponent,
     ErrorsComponent,
+    TimerFormComponent,
   ],
   imports: [
     BrowserModule,

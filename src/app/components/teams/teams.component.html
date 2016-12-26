@@ -5,14 +5,13 @@
   <span>{{ currentUser?.name }}</span>
 </div>
 <div>
-  <span>User id:</span>
-  <span>{{ currentUser?.id }}</span>
-</div>
-<div>
   <span>Team name:</span>
   <span>{{ currentUser?.extTeamName }}</span>
 </div>
-<div>
-  <span>Team id:</span>
-  <span>{{ currentUser?.teamId }}</span>
+
+
+<div class="calendar-day__holder-tasks">
+  <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
+
+  <app-timer-form *ngFor="let timer of timers" [timer]="timer"></app-timer-form>
 </div>

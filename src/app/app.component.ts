@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
           this.router.navigate(['/teams', this.currentUser.teamId]);
         } else {
           let error = new AppError(400, "please login from Slack application");
-          this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: error});
+          this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: error});
         }
       }
 

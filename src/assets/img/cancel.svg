@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="10px" height="10px" viewBox="0 0 10 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>BACF7207-1265-4F39-903B-6CF45C78E526</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <ellipse id="path-1" cx="5" cy="5" rx="5" ry="5"></ellipse>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="10" height="10" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Day_dark" transform="translate(-1283.000000, -444.000000)">
+            <g id="Group-8" transform="translate(1283.000000, 444.000000)">
+                <path d="M5.45454545,4.54545455 L5.45454545,2.72727273 L4.54545455,2.72727273 L4.54545455,4.54545455 L2.72727273,4.54545455 L2.72727273,5.45454545 L4.54545455,5.45454545 L4.54545455,7.27272727 L5.45454545,7.27272727 L5.45454545,5.45454545 L7.27272727,5.45454545 L7.27272727,4.54545455 L5.45454545,4.54545455 Z" id="Combined-Shape" fill="#6B94C3" transform="translate(5.000000, 5.000000) rotate(-315.000000) translate(-5.000000, -5.000000) "></path>
+                <use id="Oval-2" stroke="#6B94C3" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            </g>
+        </g>
+    </g>
+</svg>

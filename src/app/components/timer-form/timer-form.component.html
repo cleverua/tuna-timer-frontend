@@ -1,0 +1,31 @@
+<div class="calendar-day__holder-tasks-item">
+  <div class="calendar-dday__hour">
+    <h5 *ngIf="timer.finishedAt">
+      {{timer.createdAt.getHours()}}:{{timer.createdAt.getMinutes()}} -
+      {{timer.finishedAt.getHours()}}:{{timer.finishedAt.getMinutes()}}
+    </h5>
+
+    <!--TODO: show some spinner for current timer-->
+    <h5 *ngIf="!timer.finishedAt">{{timer.createdAt.getHours()}}:{{timer.createdAt.getMinutes()}} - ...</h5>
+  </div>
+  <div class="calendar-dday__col--active">
+    <form action="">
+      <div class="calendar-dday__col-title">
+        <h4>{{timer.taskName}}</h4>
+      </div>
+      <div class="calendar-dday__item-select">
+        <select>
+          <option>#ui_ux</option>
+          <option>#useful-links</option>
+          <option>#tuna-timer</option>
+          <option>#tuna-timer_dev</option>
+        </select>
+      </div>
+      <div class="calendar-dday__btn calendar-dday__btn--active"></div>
+      <div class="calendar-dday__btn__item-hour">
+        <h3>{{timer.minToHours()}}</h3>
+      </div>
+      <button class="calendar-dday__close"></button>
+    </form>
+  </div>
+</div>

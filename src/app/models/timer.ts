@@ -1,26 +1,26 @@
 export class Timer {
-  private id: string;
-  private taskName: string;
-  private taskHash: string;
-  private teamID: string;
-  private teamUserID: string;
-  private createdAt: Date;
-  private finishedAt: Date;
-  private deletedAt: Date;
-  private minutes: number;
-  private projectExtID: string;
-  private projectExtName: string;
-  private projectID: string;
-  private tzOffset: number;
+  id: string;
+  taskName: string;
+  taskHash: string;
+  teamID: string;
+  teamUserID: string;
+  createdAt: Date;
+  finishedAt: Date;
+  deletedAt: Date;
+  minutes: number;
+  projectExtID: string;
+  projectExtName: string;
+  projectID: string;
+  tzOffset: number;
 
   constructor(data: any) {
     this.id = data.id;
     this.taskName = data.task_name;
     this.teamUserID = data.team_user_id;
     this.projectExtID = data.project_ext_id;
-    this.createdAt = data.created_at;
-    this.deletedAt = data.deleted_at;
-    this.finishedAt = data.finished_at;
+    this.createdAt = new Date(data.created_at);
+    this.deletedAt = data.deleted_at ? new Date(data.deleted_at) : null;
+    this.finishedAt = data.finished_at ? new Date(data.finished_at) : null;
     this.minutes = data.minutes;
     this.projectExtName = data.project_ext_name;
     this.projectID = data.project_id;
@@ -28,5 +28,29 @@ export class Timer {
     this.teamID = data.team_id;
     this.tzOffset = data.tz_offset;
   }
+
+  minToHours(): string {
+    let hours;
+    let minutes;
+    if (this.minutes) {
+      hours = Math.floor(this.minutes / 60);
+      minutes = (this.minutes % 60).toString();
+    } else {
+      let now = new Date();
+      let min = (now.getTime() - this.createdAt.getTime()) / (1000 * 60);
+      hours = Math.floor(min / 60);
+      minutes = Math.round(min % 60).toString();
+    }
+
+    if (minutes.length < 2) {
+      minutes = `0${minutes}`;
+    }
+
+    if (minutes == "60") {
+      hours += 1;
+      minutes = "00";
+    }
+    return `${hours}:${minutes}`
+}
 }
 
