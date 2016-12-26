@@ -1,20 +1,18 @@
-import { CurrentUserActions } from '../actions/current-user.actions';
+import { UserActions } from '../actions/user.actions';
+import { REHYDRATE } from 'redux-persist/constants';
+import { User } from "../models/user";
 
-export class CurrentUserState {
-    public timezone: string;
-
-    constructor(public id: string, public isAdmin: boolean) {
-      this.timezone = '[unknown]';
-    }
-}
-
-const initialState = new CurrentUserState('0987654321', false);
-
-export function currentUserReducer(state: CurrentUserState = initialState, action: any) {
+export function currentUserReducer(state: User = null, action: any) {
   switch (action.type) {
-    case CurrentUserActions.SET_TIMEZONE:
+    case REHYDRATE:
+      let user = action.payload.currentUser;
+      return user ? Object.assign({}, user) : state;
+    case UserActions.SET_TIMEZONE:
       console.log('currentUserReducer#SET_TIMEZONE');
       return Object.assign( {}, state, { timezone: action.payload.timezone } );
+    case UserActions.SET_USER:
+      console.log("currentUserReducer#SET_USER");
+      return action.payload.currentUser;
     default:
       return state;
   }
