@@ -8,8 +8,8 @@ import { AppError } from "../models/app-error";
 
 @Injectable()
 export class ApiService {
-  private static authUrl = 'http://localhost:8080/api/v1/frontend/session';
-  private static timersUrl = 'http://localhost:8080/api/v1/frontend/timers';
+  private static authUrl = 'http://192.168.0.86:8080/api/v1/frontend/session';
+  private static timersUrl = 'http://192.168.0.86:8080/api/v1/frontend/timers';
 
   constructor(private http: Http) { }
 
