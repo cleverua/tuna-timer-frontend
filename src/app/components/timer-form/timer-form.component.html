@@ -1,12 +1,12 @@
 <div class="calendar-day__holder-tasks-item">
   <div class="calendar-dday__hour">
     <h5 *ngIf="timer.finishedAt">
-      {{timer.createdAt.getHours()}}:{{timer.createdAt.getMinutes()}} -
-      {{timer.finishedAt.getHours()}}:{{timer.finishedAt.getMinutes()}}
+      {{ timer.createdAt | date:'H:mm' }} -
+      {{ timer.finishedAt | date:'H:mm' }}
     </h5>
 
     <!--TODO: show some spinner for current timer-->
-    <h5 *ngIf="!timer.finishedAt">{{timer.createdAt.getHours()}}:{{timer.createdAt.getMinutes()}} - ...</h5>
+    <h5 *ngIf="!timer.finishedAt">{{ timer.createdAt | date:'H:mm' }} - ...</h5>
   </div>
   <div class="calendar-dday__col--active">
     <form action="">
@@ -15,13 +15,14 @@
       </div>
       <div class="calendar-dday__item-select">
         <select>
-          <option>#ui_ux</option>
-          <option>#useful-links</option>
-          <option>#tuna-timer</option>
-          <option>#tuna-timer_dev</option>
+          <option
+            *ngFor="let project of projects"
+            [selected]="timer.projectExtName === project.ext_name">
+            #{{project.ext_name}}
+          </option>
         </select>
       </div>
-      <div class="calendar-dday__btn calendar-dday__btn--active"></div>
+      <div  [ngClass]="{'calendar-dday__btn-pause': !timer.minutes}" class="calendar-dday__btn calendar-dday__btn--active"></div>
       <div class="calendar-dday__btn__item-hour">
         <h3>{{timer.minToHours()}}</h3>
       </div>

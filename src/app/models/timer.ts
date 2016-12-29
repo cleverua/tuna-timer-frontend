@@ -29,28 +29,24 @@ export class Timer {
     this.tzOffset = data.tz_offset;
   }
 
-  minToHours(): string {
-    let hours;
-    let minutes;
+  getMinutes() {
     if (this.minutes) {
-      hours = Math.floor(this.minutes / 60);
-      minutes = (this.minutes % 60).toString();
-    } else {
+      return this.minutes
+    }else {
       let now = new Date();
-      let min = (now.getTime() - this.createdAt.getTime()) / (1000 * 60);
-      hours = Math.floor(min / 60);
-      minutes = Math.round(min % 60).toString();
+      return Math.round((now.getTime() - this.createdAt.getTime()) / (1000 * 60));
     }
+  }
+
+  minToHours(): string {
+    let hours = Math.floor(this.getMinutes() / 60);
+    let minutes = (this.getMinutes() % 60).toString();
 
     if (minutes.length < 2) {
       minutes = `0${minutes}`;
     }
 
-    if (minutes == "60") {
-      hours += 1;
-      minutes = "00";
-    }
     return `${hours}:${minutes}`
-}
+  }
 }
 
