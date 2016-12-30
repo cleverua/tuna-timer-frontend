@@ -34,13 +34,14 @@ export class TeamsComponent implements OnInit {
   }
 
   private getTotal(timers) {
-    if (timers){
+    if (timers && timers[0]){
       let total = timers.reduce((sum, next) => {
         let minutes = sum.getMinutes() + next.getMinutes();
         return new Timer({minutes: minutes})
       });
-
       this.totalScore = total.minToHours();
+    } else {
+      this.totalScore = "0:00";
     }
   }
 
