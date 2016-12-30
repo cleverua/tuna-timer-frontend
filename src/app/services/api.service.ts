@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw'
 import { AppError } from "../models/app-error";
+import {Timer} from "../models/timer";
 
 @Injectable()
 export class ApiService {
@@ -12,6 +13,7 @@ export class ApiService {
   private static authUrl = 'http://localhost:8080/api/v1/frontend/session';
   private static timersUrl = 'http://localhost:8080/api/v1/frontend/timers';
   private static projectsUrl = 'http://localhost:8080/api/v1/frontend/projects';
+  private static timerUrl = 'http://localhost:8080/api/v1/frontend/timer';
 
   constructor(private http: Http) { }
 
@@ -48,6 +50,39 @@ export class ApiService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(ApiService.authUrl, {pid: pid}, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  updateTimer(jwt: string, timer: Timer) {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + jwt
+    });
+    let options = new RequestOptions({ headers: headers });
+    let body = {
+      minutes: timer.minutes,
+      project: timer.projectID,
+      name: timer.taskName
+    };
+
+    return this.http.put(`${ApiService.timerUrl}/${timer.id}`, body, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  createTimer(jwt: string, timer: Timer) {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + jwt
+    });
+    let options = new RequestOptions({ headers: headers });
+    let body = {
+      project: timer.projectID,
+      name: timer.taskName
+    };
+
+    return this.http.put(ApiService.timerUrl, body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

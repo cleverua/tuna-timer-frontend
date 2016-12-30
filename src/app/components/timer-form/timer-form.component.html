@@ -22,7 +22,11 @@
           </option>
         </select>
       </div>
-      <div  [ngClass]="{'calendar-dday__btn-pause': !timer.minutes}" class="calendar-dday__btn calendar-dday__btn--active"></div>
+      <div
+        [ngClass]="{'calendar-dday__btn-pause': !timer.minutes}"
+        class="calendar-dday__btn calendar-dday__btn--active"
+        (click)="startStopClickHandler()">
+      </div>
       <div class="calendar-dday__btn__item-hour">
         <h3>{{timer.minToHours()}}</h3>
       </div>

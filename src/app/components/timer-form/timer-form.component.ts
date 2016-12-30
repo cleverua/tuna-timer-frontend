@@ -45,4 +45,27 @@ export class TimerFormComponent implements OnInit, OnDestroy {
         this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
     });
   }
+
+  startStopClickHandler() {
+    if (this.timer.finishedAt) {
+      this.apiService.createTimer(this.currentUser.jwt, this.timer).subscribe(
+        resp => {
+          console.log(resp);
+          this.ngRedux.dispatch({ type: 'SET_TIMERS', timers: resp.data});
+        },
+        err  => {
+          this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+        }
+      );
+    } else {
+      this.apiService.updateTimer(this.currentUser.jwt, this.timer).subscribe(
+        resp => {
+          console.log(resp);
+          this.ngRedux.dispatch({ type: 'SET_TIMER', timer: resp.data});
+        },
+        err  => {
+          this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+        });
+    }
+  }
 }
