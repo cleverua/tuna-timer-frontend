@@ -1,8 +1,3 @@
-<div class="calendar-day__holder-tasks">
-  <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
-
-  <app-timer-form *ngFor="let timer of timers" [timer]="timer" [projects]="projects" [currentUser]="currentUser"></app-timer-form>
-</div>
 
 <table class="calendar__week-table">
   <tr class="calendar-week__sector-total-col">
@@ -19,3 +14,5 @@
     </td>
   </tr>
 </table>
+
+<app-calendar></app-calendar>

@@ -1,0 +1,76 @@
+<main class="main main-calendar">
+  <div class="fluid-container">
+    <div class="calendar-week">
+      <div class="calendar-week__top">
+        <ul>
+          <li class="calendar-week__year">
+            <a href="#">{{previousYear}}</a>
+          </li>
+          <li *ngFor="let monthNumber of monthArray; let i = index" [ngClass]="{'calendar-week--active': i == currentMonth, 'calendar-week__future': i > currentMonth }">
+            <a >{{monthNumber}}</a>
+
+          </li>
+        </ul>
+      </div>
+
+      <div class="calendar-week__calendar">
+        <h1 class="calendar-week__calendar-title">October 15 - 21</h1>
+        <div class="calendar-week__calendar-holder">
+          <div class="calendar-week__calendar-week">
+            <ul>
+              <li>Mo<button class="calendar-week__calendar-btn">1</button></li>
+              <li>Tu<button class="calendar-week__calendar-btn">2</button></li>
+              <li>We<button class="calendar-week__calendar-btn">3</button></li>
+              <li>Th<button class="calendar-week__calendar-btn">4</button></li>
+              <li>Fr<button class="calendar-week__calendar-btn">5</button></li>
+              <li>Sa<button class="calendar-week__calendar-btn">6</button></li>
+              <li>Su<button class="calendar-week__calendar-btn">7</button></li>
+            </ul>
+          </div>
+          <div class="calendar-week__calendar-week">
+            <ul>
+              <li>Mo<button class="calendar-week__calendar-btn">8</button></li>
+              <li>Tu<button class="calendar-week__calendar-btn">9</button></li>
+              <li>We<button class="calendar-week__calendar-btn">10</button></li>
+              <li>Th<button class="calendar-week__calendar-btn">11</button></li>
+              <li>Fr<button class="calendar-week__calendar-btn">12</button></li>
+              <li>Sa<button class="calendar-week__calendar-btn">13</button></li>
+              <li>Su<button class="calendar-week__calendar-btn">14</button></li>
+            </ul>
+          </div>
+          <div class="calendar-week__calendar-week">
+            <ul>
+              <li>Mo<button class="calendar-week__calendar-btn">15</button></li>
+              <li>Tu<button class="calendar-week__calendar-btn">16</button></li>
+              <li>We<button class="calendar-week__calendar-btn">17</button></li>
+              <li>Th<button class="calendar-week__calendar-btn">18</button></li>
+              <li>Fr<button class="calendar-week__calendar-btn">19</button></li>
+              <li>Sa<button class="calendar-week__calendar-btn">20</button></li>
+              <li>Su<button class="calendar-week__calendar-btn">21</button></li>
+            </ul>
+          </div>
+          <div class="calendar-week__calendar-week">
+            <ul>
+              <li>Mo<button class="calendar-week__calendar-btn">22</button></li>
+              <li>Tu<button class="calendar-week__calendar-btn">23</button></li>
+              <li>We<button class="calendar-week__calendar-btn">24</button></li>
+              <li>Th<button class="calendar-week__calendar-btn calendar-week__calendar-btn--active">25</button></li>
+              <li>Fr<button class="calendar-week__calendar-btn">26</button></li>
+              <li>Sa<button class="calendar-week__calendar-btn">27</button></li>
+              <li>Su<button class="calendar-week__calendar-btn">28</button></li>
+            </ul>
+          </div>
+          <div class="calendar-week__calendar-week calendar-week__calendar-week-last">
+            <ul>
+              <li>Mo<button class="calendar-week__calendar-btn">29</button></li>
+              <li>Tu<button class="calendar-week__calendar-btn">30</button></li>
+              <li>We<button class="calendar-week__calendar-btn">31</button></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</main>
