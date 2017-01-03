@@ -23,7 +23,7 @@
         </select>
       </div>
       <div
-        [ngClass]="{'calendar-dday__btn-pause': !timer.minutes}"
+        [ngClass]="{'calendar-dday__btn-pause': !timer.finishedAt}"
         class="calendar-dday__btn calendar-dday__btn--active"
         (click)="startStopClickHandler()">
       </div>

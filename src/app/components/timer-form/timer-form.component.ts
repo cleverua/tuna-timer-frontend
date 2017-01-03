@@ -21,7 +21,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
   constructor(private ngRedux: NgRedux<AppState>, private apiService: ApiService) { }
 
   ngOnInit() {
-    if (!this.timer.minutes) {
+    if (!this.timer.finishedAt) {
       let timer = TimerObservable.create(this.fetchPeriod, this.fetchPeriod);
       this.subscription = timer.subscribe(() => {
         if (!document.hidden) {
@@ -58,10 +58,9 @@ export class TimerFormComponent implements OnInit, OnDestroy {
         }
       );
     } else {
-      this.apiService.updateTimer(this.currentUser.jwt, this.timer).subscribe(
+      this.apiService.updateTimer(this.currentUser.jwt, this.timer, true).subscribe(
         resp => {
-          console.log(resp);
-          this.ngRedux.dispatch({ type: 'SET_TIMER', timer: resp.data});
+          this.ngRedux.dispatch({ type: 'UPDATE_TIMER', timer: new Timer(resp.data)});
         },
         err  => {
           this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});

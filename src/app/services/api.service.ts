@@ -13,7 +13,7 @@ export class ApiService {
   private static authUrl = 'http://localhost:8080/api/v1/frontend/session';
   private static timersUrl = 'http://localhost:8080/api/v1/frontend/timers';
   private static projectsUrl = 'http://localhost:8080/api/v1/frontend/projects';
-  private static timerUrl = 'http://localhost:8080/api/v1/frontend/timer';
+  private static timerUrl = 'http://localhost:8080/api/v1/frontend/timers';
 
   constructor(private http: Http) { }
 
@@ -54,19 +54,19 @@ export class ApiService {
       .catch(this.handleError);
   }
 
-  updateTimer(jwt: string, timer: Timer) {
+  updateTimer(jwt: string, timer: Timer, stopAction: boolean = false) {
     let headers = new Headers({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + jwt
     });
-    let options = new RequestOptions({ headers: headers });
-    let body = {
-      minutes: timer.minutes,
-      project: timer.projectID,
-      name: timer.taskName
-    };
 
-    return this.http.put(`${ApiService.timerUrl}/${timer.id}`, body, options)
+    let params: URLSearchParams = new URLSearchParams();
+    if (stopAction) {
+      params.set("stop_timer", "t");
+    }
+
+    let options = new RequestOptions({ headers: headers, search: params });
+    return this.http.put(`${ApiService.timerUrl}/${timer.id}`, timer, options)
       .map(this.extractData)
       .catch(this.handleError);
   }
