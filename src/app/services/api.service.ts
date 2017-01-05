@@ -77,12 +77,8 @@ export class ApiService {
       'Authorization': 'Bearer ' + jwt
     });
     let options = new RequestOptions({ headers: headers });
-    let body = {
-      project: timer.projectID,
-      name: timer.taskName
-    };
 
-    return this.http.put(ApiService.timerUrl, body, options)
+    return this.http.post(ApiService.timerUrl, timer, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

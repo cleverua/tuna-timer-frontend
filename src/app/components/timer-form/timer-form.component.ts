@@ -21,7 +21,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
   constructor(private ngRedux: NgRedux<AppState>, private apiService: ApiService) { }
 
   ngOnInit() {
-    if (!this.timer.finishedAt) {
+    if (!this.timer.finished_at) {
       let timer = TimerObservable.create(this.fetchPeriod, this.fetchPeriod);
       this.subscription = timer.subscribe(() => {
         if (!document.hidden) {
@@ -39,31 +39,31 @@ export class TimerFormComponent implements OnInit, OnDestroy {
     this.apiService.getTasks(this.currentUser.jwt).subscribe(
       resp => {
         let timers: Timer[] = resp.data.map(t => { return new Timer(t) });
-        this.ngRedux.dispatch({ type: 'SET_TIMERS', timers: timers});
+        this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
       },
       err  => {
-        this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+        this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
     });
   }
 
   startStopClickHandler() {
-    if (this.timer.finishedAt) {
+    if (this.timer.finished_at) {
       this.apiService.createTimer(this.currentUser.jwt, this.timer).subscribe(
         resp => {
-          console.log(resp);
-          this.ngRedux.dispatch({ type: 'SET_TIMERS', timers: resp.data});
+          var timers: Timer[] = resp.data.map(t => { return new Timer(t) });
+          this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
         },
         err  => {
-          this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+          this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
         }
       );
     } else {
       this.apiService.updateTimer(this.currentUser.jwt, this.timer, true).subscribe(
         resp => {
-          this.ngRedux.dispatch({ type: 'UPDATE_TIMER', timer: new Timer(resp.data)});
+          this.ngRedux.dispatch({type: 'UPDATE_TIMER', timer: new Timer(resp.data)});
         },
         err  => {
-          this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+          this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
         });
     }
   }

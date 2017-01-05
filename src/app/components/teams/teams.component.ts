@@ -37,7 +37,7 @@ export class TeamsComponent implements OnInit {
     if (timers && timers[0]){
       let total = timers.reduce((sum, next) => {
         let minutes = sum.getMinutes() + next.getMinutes();
-        return new Timer({minutes: minutes})
+        return new Timer({minutes: minutes, finished_at: new Date()})
       });
       this.totalScore = total.minToHours();
     } else {
@@ -54,12 +54,12 @@ export class TeamsComponent implements OnInit {
           timers = [];
         }
 
-        this.ngRedux.dispatch({ type: 'SET_TIMERS', timers: timers});
-        this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
-        this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-tasks'});
+        this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
+        this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
+        this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-tasks'});
       },
       err  => {
-        this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+        this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
       }
     );
 
@@ -67,10 +67,10 @@ export class TeamsComponent implements OnInit {
       resp => {
         //TODO put projects to store(if we need that)
         this.projects = resp.data;
-        this.ngRedux.dispatch({ type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-projects'});
+        this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-projects'});
       },
       err  => {
-        this.ngRedux.dispatch({ type: 'SET_APP_ERROR', appError: err});
+        this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
       });
   }
 }

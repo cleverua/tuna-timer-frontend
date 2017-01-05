@@ -1,29 +1,29 @@
 <div class="calendar-day__holder-tasks-item">
   <div class="calendar-dday__hour">
-    <h5 *ngIf="timer.finishedAt">
-      {{ timer.createdAt | date:'H:mm' }} -
-      {{ timer.finishedAt | date:'H:mm' }}
+    <h5 *ngIf="timer.finished_at">
+      {{ timer.created_at | date:'H:mm' }} -
+      {{ timer.finished_at | date:'H:mm' }}
     </h5>
 
     <!--TODO: show some spinner for current timer-->
-    <h5 *ngIf="!timer.finishedAt">{{ timer.createdAt | date:'H:mm' }} - ...</h5>
+    <h5 *ngIf="!timer.finished_at">{{ timer.created_at | date:'H:mm' }} - ...</h5>
   </div>
   <div class="calendar-dday__col--active">
     <form action="">
       <div class="calendar-dday__col-title">
-        <h4>{{timer.taskName}}</h4>
+        <h4>{{timer.task_name}}</h4>
       </div>
       <div class="calendar-dday__item-select">
         <select>
           <option
             *ngFor="let project of projects"
-            [selected]="timer.projectExtName === project.ext_name">
+            [selected]="timer.project_ext_name === project.ext_name">
             #{{project.ext_name}}
           </option>
         </select>
       </div>
       <div
-        [ngClass]="{'calendar-dday__btn-pause': !timer.finishedAt}"
+        [ngClass]="{'calendar-dday__btn-pause': !timer.finished_at}"
         class="calendar-dday__btn calendar-dday__btn--active"
         (click)="startStopClickHandler()">
       </div>
