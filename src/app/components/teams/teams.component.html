@@ -4,14 +4,18 @@
   <app-timer-form *ngFor="let timer of timers" [timer]="timer" [projects]="projects" [currentUser]="currentUser"></app-timer-form>
 </div>
 
-<div class="calendar-day__total">
-  <div class="calendar-day__total-col">
-    <ul class="calendar-day__total-nav">
-      <li><a href="#">Print report</a></li>
-      <li><a href="#">Export report</a></li>
-    </ul>
-  </div>
-  <div class="calendar-day__total-col">
-    <h2>{{totalScore}}</h2>
-  </div>
-</div>
+<table class="calendar__week-table">
+  <tr class="calendar-week__sector-total-col">
+    <td colspan="3" class="calendar-week__sector-total">
+      <div class="calendar-day__total-col">
+        <ul class="calendar-day__total-nav">
+          <li><a href="#">Print report</a></li>
+          <li><a href="#">Export report</a></li>
+        </ul>
+      </div>
+    </td>
+    <td colspan="4" class="calendar-week__sector-total">
+      <h2>{{totalScore}}</h2>
+    </td>
+  </tr>
+</table>

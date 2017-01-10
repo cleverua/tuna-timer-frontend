@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { NgReduxModule, NgRedux } from 'ng2-redux';
 import { createStore } from 'redux';
+import { Autosize } from 'angular2-autosize/angular2-autosize';
 
 import { AppState } from './app.state';
 import { AppComponent } from './app.component';
@@ -29,6 +30,7 @@ import { TimerFormComponent } from './components/timer-form/timer-form.component
     TeamsComponent,
     ErrorsComponent,
     TimerFormComponent,
+    Autosize,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <div class="calendar-day__holder-tasks-item">
-  <div class="calendar-dday__hour">
+  <div class="calendar-day__hour">
     <h5 *ngIf="timer.finished_at">
       {{ timer.created_at | date:'H:mm' }} -
       {{ timer.finished_at | date:'H:mm' }}
@@ -8,29 +8,42 @@
     <!--TODO: show some spinner for current timer-->
     <h5 *ngIf="!timer.finished_at">{{ timer.created_at | date:'H:mm' }} - ...</h5>
   </div>
-  <div class="calendar-dday__col--active">
-    <form action="">
-      <div class="calendar-dday__col-title">
-        <h4>{{timer.task_name}}</h4>
+  <div class="calendar-day__col--active">
+    <form>
+      <div class="calendar-day__col-title">
+        <textarea class="calendar-day__col-title-field"
+                  rows="1"
+                  autosize
+                  name="taskName"
+                  [(ngModel)]="timer.task_name"
+                  required
+                  #nameInputElement
+                  #nameInput="ngModel"
+                  (keydown.enter)="nameInputElement.blur()"
+                  (blur)="updateTimer(nameInput)">
+        </textarea>
+        <div class="text_area_div"></div>
       </div>
-      <div class="calendar-dday__item-select">
-        <select>
-          <option
-            *ngFor="let project of projects"
-            [selected]="timer.project_ext_name === project.ext_name">
-            #{{project.ext_name}}
+      <div class="calendar-day__item-select">
+        <select
+          required
+          [(ngModel)]="timer.project_ext_name" name="timer_project"
+          (ngModelChange)="selectHandler($event)">
+          <option *ngFor="let project of projects">
+            {{project.ext_name}}
           </option>
         </select>
       </div>
       <div
-        [ngClass]="{'calendar-dday__btn-pause': !timer.finished_at}"
-        class="calendar-dday__btn calendar-dday__btn--active"
+        [ngClass]="{'calendar-day__btn-pause': !timer.finished_at}"
+        class="calendar-day__btn calendar-day__btn--active"
         (click)="startStopClickHandler()">
       </div>
-      <div class="calendar-dday__btn__item-hour">
-        <h3>{{timer.minToHours()}}</h3>
+      <div class="calendar-day__btn__item-hour">
+        <textarea class="calendar-day__btn__item-hour-field" [disabled]="!timer.finished_at">{{timer.minToHours()}}</textarea>
+        <div class="text_area_div"></div>
       </div>
-      <button class="calendar-dday__close"></button>
+      <button class="calendar-day__close"></button>
     </form>
   </div>
 </div>
