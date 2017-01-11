@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { NgReduxModule, NgRedux } from 'ng2-redux';
 import { createStore } from 'redux';
+import { MomentModule } from 'angular2-moment';
 import { Autosize } from 'angular2-autosize/angular2-autosize';
 
 import { AppState } from './app.state';
@@ -12,6 +13,7 @@ import { AppComponent } from './app.component';
 import { rootReducer } from './store/root.reducer';
 
 import { ApiService } from './services/api.service';
+import { TimersService } from './services/timers.service';
 import { PersistenceService } from './services/persistence.service';
 import { UserActions } from './actions/user.actions';
 
@@ -37,13 +39,15 @@ import { TimerFormComponent } from './components/timer-form/timer-form.component
     FormsModule,
     HttpModule,
     NgReduxModule.forRoot(),
-    routing
+    routing,
+    MomentModule
   ],
   providers: [
     PersistenceService,
     ApiService,
     UserActions,
-    AppErrorService
+    AppErrorService,
+    TimersService,
   ],
   bootstrap: [AppComponent]
 })

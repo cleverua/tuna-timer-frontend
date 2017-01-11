@@ -20,7 +20,8 @@
                   #nameInputElement
                   #nameInput="ngModel"
                   (keydown.enter)="nameInputElement.blur()"
-                  (blur)="updateTimer(nameInput)">
+                  (blur)="updateTimerNameHandler(nameInput)"
+                  (focus)="disableTimersUpdate()">
         </textarea>
         <div class="text_area_div"></div>
       </div>
@@ -28,7 +29,8 @@
         <select
           required
           [(ngModel)]="timer.project_ext_name" name="timer_project"
-          (ngModelChange)="selectHandler($event)">
+          (ngModelChange)="selectProjectHandler($event)"
+          (focus)="disableTimersUpdate()">
           <option *ngFor="let project of projects">
             {{project.ext_name}}
           </option>
@@ -40,7 +42,11 @@
         (click)="startStopClickHandler()">
       </div>
       <div class="calendar-day__btn__item-hour">
-        <textarea class="calendar-day__btn__item-hour-field" [disabled]="!timer.finished_at">{{timer.minToHours()}}</textarea>
+        <textarea class="calendar-day__btn__item-hour-field"
+                  [disabled]="!timer.finished_at"
+                  (focus)="disableTimersUpdate()">
+          {{timer.minToHours()}}
+        </textarea>
         <div class="text_area_div"></div>
       </div>
       <button class="calendar-day__close"></button>

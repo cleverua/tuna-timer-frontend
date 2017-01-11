@@ -48,11 +48,8 @@ export class TeamsComponent implements OnInit {
   private fetchCurrentUserData() {
     this.apiService.getTasks(this.currentUser.jwt).subscribe(
       resp => {
-        if (resp.data) {
-          var timers: Timer[] = resp.data.map(t => { return new Timer(t) });
-        } else {
-          timers = [];
-        }
+        let timersData: Timer[] = resp.data || [];
+        let timers = timersData.map(t => { return new Timer(t) });
 
         this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
         this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
