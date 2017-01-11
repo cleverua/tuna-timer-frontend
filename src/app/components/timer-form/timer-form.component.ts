@@ -8,6 +8,8 @@ import { User } from "../../models/user";
 import { Timer } from "../../models/timer";
 import { TimersService } from "../../services/timers.service";
 
+import * as moment from "moment"
+
 @Component({
   selector: 'app-timer-form',
   templateUrl: './timer-form.component.html'
@@ -18,6 +20,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
   @Input() currentUser: User;
   private subscription: Subscription;
   private fetchPeriod: number = 10000;
+  private timerMinutes: string;
 
   constructor(private timersService: TimersService) { }
 
@@ -30,6 +33,8 @@ export class TimerFormComponent implements OnInit, OnDestroy {
         if (!document.hidden) this.timersService.updateTimers(this.currentUser.jwt)
       });
     }
+
+    this.timerMinutes = this.timer.minToHours();
   }
 
   ngOnDestroy() {
@@ -44,7 +49,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateTimerNameHandler(input: NgModel = null) {
+  updateTaskNameHandler(input: NgModel = null) {
     this.timersService.allowUpdate();
     if (input.pristine || input.invalid) return;
     this.timersService.updateTimer(this.timer, this.currentUser.jwt);
@@ -57,6 +62,21 @@ export class TimerFormComponent implements OnInit, OnDestroy {
 
     this.timersService.updateTimer(this.timer, this.currentUser.jwt);
     this.timersService.allowUpdate();
+  }
+
+  updateMinutesHandler(input: NgModel = null) {
+    if (input.invalid) {
+      this.timerMinutes = this.timer.minToHours();
+      return
+    }
+
+    if (input.dirty) {
+      let editTime = moment.duration(this.timerMinutes).asMinutes() - this.timer.minutes;
+
+
+      //TODO update TIMER
+      console.log("Edit Time:", editTime)
+    }
   }
 
   disableTimersUpdate() {
