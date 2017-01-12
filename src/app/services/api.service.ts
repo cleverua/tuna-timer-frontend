@@ -5,11 +5,15 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw'
 import { AppError } from "../models/app-error";
+import {Timer} from "../models/timer";
 
 @Injectable()
 export class ApiService {
-  private static authUrl = 'http://192.168.0.86:8080/api/v1/frontend/session';
-  private static timersUrl = 'http://192.168.0.86:8080/api/v1/frontend/timers';
+  //TODO move url(for develop and production mode) into project config
+  private static authUrl = 'http://localhost:8080/api/v1/frontend/session';
+  private static timersUrl = 'http://localhost:8080/api/v1/frontend/timers';
+  private static projectsUrl = 'http://localhost:8080/api/v1/frontend/projects';
+  private static timerUrl = 'http://localhost:8080/api/v1/frontend/timers';
 
   constructor(private http: Http) { }
 
@@ -28,7 +32,16 @@ export class ApiService {
 
     let options = new RequestOptions({ headers: headers, search: params });
     return this.http.get(ApiService.timersUrl, options)
-      .map(s => {return s.json().data})
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  getProjects(jwt: string): Observable<any> {
+    let headers: Headers = new Headers({'Authorization': 'Bearer ' + jwt});
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.get(ApiService.projectsUrl, options)
+      .map(this.extractData)
       .catch(this.handleError);
   }
 
@@ -37,6 +50,35 @@ export class ApiService {
     let options = new RequestOptions({ headers: headers });
 
     return this.http.post(ApiService.authUrl, {pid: pid}, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  updateTimer(jwt: string, timer: Timer, stopAction: boolean = false) {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + jwt
+    });
+
+    let params: URLSearchParams = new URLSearchParams();
+    if (stopAction) {
+      params.set("stop_timer", "t");
+    }
+
+    let options = new RequestOptions({ headers: headers, search: params });
+    return this.http.put(`${ApiService.timerUrl}/${timer.id}`, timer, options)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  createTimer(jwt: string, timer: Timer) {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + jwt
+    });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.post(ApiService.timerUrl, timer, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

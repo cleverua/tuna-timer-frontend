@@ -1,17 +1,21 @@
-<div>
-  <img [src]="currentUser?.imageUrl" alt="no image">
-  <h2>Current user</h2>
-  <span>User Name: </span>
-  <span>{{ currentUser?.name }}</span>
-</div>
-<div>
-  <span>Team name:</span>
-  <span>{{ currentUser?.extTeamName }}</span>
-</div>
-
-
 <div class="calendar-day__holder-tasks">
   <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
 
-  <app-timer-form *ngFor="let timer of timers" [timer]="timer"></app-timer-form>
+  <app-timer-form *ngFor="let timer of timers" [timer]="timer" [projects]="projects" [currentUser]="currentUser"></app-timer-form>
 </div>
+
+<table class="calendar__week-table">
+  <tr class="calendar-week__sector-total-col">
+    <td colspan="3" class="calendar-week__sector-total">
+      <div class="calendar-day__total-col">
+        <ul class="calendar-day__total-nav">
+          <li><a href="#">Print report</a></li>
+          <li><a href="#">Export report</a></li>
+        </ul>
+      </div>
+    </td>
+    <td colspan="4" class="calendar-week__sector-total">
+      <h2>{{totalScore}}</h2>
+    </td>
+  </tr>
+</table>
