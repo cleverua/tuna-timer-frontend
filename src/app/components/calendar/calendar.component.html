@@ -4,9 +4,9 @@
       <div class="calendar-week__top">
         <ul>
           <li class="calendar-week__year">
-            <a href="#">{{currentDay.year() - 1}}</a>
+            <a href="#" (click)="changeCurrentYear(currentDay.year() - 1)">{{currentDay.year() - 1}}</a>
           </li>
-          <li *ngFor="let monthName of monthArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > currentDay.month() }">
+          <li *ngFor="let monthName of monthArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > currentDay.month() }" (click)="changeCurrentDay(i)">
             <a >{{ monthName }}</a>
           </li>
         </ul>

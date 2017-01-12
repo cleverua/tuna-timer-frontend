@@ -5,6 +5,7 @@ const initialState = [
   new BootstrapItem('load-user'),
   new BootstrapItem('load-tasks'),
   new BootstrapItem('load-projects'),
+  new BootstrapItem('load-day'),
 ];
 
 export function bootstrapItemsReducer(state: BootstrapItem[] = initialState, action: any) {

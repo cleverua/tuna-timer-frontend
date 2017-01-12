@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import {NgRedux} from "ng2-redux";
+import {AppState} from "../../app.state";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-calendar',
@@ -7,21 +10,36 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  private currentDay = moment(); // custom for tests '16-1', 'YY-MM'
+  private currentDay: moment.Moment;
   private monthArray: string[] = moment.monthsShort();
   arr : IMonth[];
   b: IMonth;
   arrWeeks:  IMonth[][];
   private arrDaysInMonth: any;
+  private subscription: Subscription;
 
-  constructor() {
-    this.arrWeeks = [];
-    this.arr = [];
-    this.arrDaysInMonth = [];
-    this.arrDaysInMonth = this.getMonthDays(this.currentDay.format('YYYY-MM'));
+  constructor(private ngRedux: NgRedux<AppState>) {
+
+
   }
 
   ngOnInit() {
+    // custom for tests '16-01-07', 'YY-MM-DD'    '16-1', 'YY-MM'
+
+    this.subscription  = this.ngRedux.select('currentDay').subscribe((currentDay: moment.Moment) => this.currentDay = currentDay);
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    // console.log(a);
+
+    console.log(this.currentDay);
+    if (this.currentDay) {
+      this.arrWeeks = [];
+      this.arr = [];
+      this.arrDaysInMonth = [];
+      this.arrDaysInMonth = this.getMonthDays(this.currentDay.format('YYYY-MM'));
+    }
+    // console.log(this.currentDay);
+    // this.subscription = this.ngRedux.select('SET_YEAR')
+    //   .subscribe();
   }
 
   getMonthDays(input: string) {
@@ -31,10 +49,7 @@ export class CalendarComponent implements OnInit {
     let daysInMonth = inputMoment.daysInMonth();
     let fullWeek = 0;
 
-    console.log(daysInMonth);
-
     /*Condition if month not start with Monday               */
-
     if (firstDay) {
       /*Create first not full week                             */
       for (let j = 1; j <= daysInFirstWeek; j++) {
@@ -57,7 +72,7 @@ export class CalendarComponent implements OnInit {
             this.b = {weekDay: dayOfMonth.format('dd'), day: dayOfMonth.date()};
             this.arr.push(this.b);
             this.arrWeeks.push(this.arr);
-            console.log(this.arrWeeks);
+            console.log(this.arrWeeks);  ///////////////////
             return this.arrWeeks;
           }
         }
@@ -69,6 +84,22 @@ export class CalendarComponent implements OnInit {
 
   myaction($event: any) {
     console.log($event.value);
+  }
+
+  changeCurrentDay(input: any) {
+    console.log(input);
+    // return this.currentDay = moment(input, 'YYYY-MM')
+  }
+
+  changeCurrentYear(input: string) {
+    // this.ngRedux.select('currentDate')
+    // let newDate = this.currentDay.year(input);
+    // console.log(newDate);
+    this.ngRedux.dispatch({type: 'SET_YEAR', year: input});
+    // this.currentDay = moment(input, 'YYYY');
+    // console.log(this.currentDay);
+
+    // return this.currentDay
   }
 }
 
