@@ -24,6 +24,7 @@ import { TeamsComponent } from './components/teams/teams.component';
 import { ErrorsComponent } from './components/errors/errors.component';
 import { AppErrorService } from "./services/app-error.service";
 import { TimerFormComponent } from './components/timer-form/timer-form.component';
+import { MinToHoursPipe } from './pipes/min-to-hours.pipe';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TimerFormComponent } from './components/timer-form/timer-form.component
     ErrorsComponent,
     TimerFormComponent,
     Autosize,
+    MinToHoursPipe,
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,7 @@ export class TeamsComponent implements OnInit {
   private currentUser: User;
   private timers: Timer[];
   private projects: any;
-  private totalScore: string;
+  private totalScore: number;
 
   constructor(private ngRedux: NgRedux<AppState>, private router: Router, private apiService: ApiService) { }
 
@@ -39,9 +39,7 @@ export class TeamsComponent implements OnInit {
         let minutes = sum.getMinutes() + next.getMinutes();
         return new Timer({minutes: minutes, finished_at: new Date()})
       });
-      this.totalScore = total.minToHours();
-    } else {
-      this.totalScore = "0:00";
+      this.totalScore = total.minutes;
     }
   }
 

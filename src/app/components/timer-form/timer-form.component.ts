@@ -20,7 +20,6 @@ export class TimerFormComponent implements OnInit, OnDestroy {
   @Input() currentUser: User;
   private subscription: Subscription;
   private fetchPeriod: number = 10000;
-  private timerMinutes: string;
 
   constructor(private timersService: TimersService) { }
 
@@ -33,8 +32,6 @@ export class TimerFormComponent implements OnInit, OnDestroy {
         if (!document.hidden) this.timersService.updateTimers(this.currentUser.jwt)
       });
     }
-
-    this.timerMinutes = this.timer.minToHours();
   }
 
   ngOnDestroy() {
@@ -64,19 +61,21 @@ export class TimerFormComponent implements OnInit, OnDestroy {
     this.timersService.allowUpdate();
   }
 
-  updateMinutesHandler(input: NgModel = null) {
-    if (input.invalid) {
-      this.timerMinutes = this.timer.minToHours();
-      return
+  updateMinutesHandler(input: HTMLInputElement) {
+    let initialValue = input.getAttribute("ng-reflect-value");
+    let regex = new RegExp("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
+
+    if (regex.test(input.value) && initialValue != input.value) {
+      let editTime = moment.duration(input.value).asMinutes() - this.timer.minutes;
+      this.timer.edits.push({created_at: new(Date), team_user_id: this.currentUser.id, minutes: editTime});
+      this.timer.minutes = this.timer.minutes + editTime;
+
+      this.timersService.updateTimer(this.timer, this.currentUser.jwt);
+    } else {
+      input.value = initialValue;
     }
 
-    if (input.dirty) {
-      let editTime = moment.duration(this.timerMinutes).asMinutes() - this.timer.minutes;
-
-
-      //TODO update TIMER
-      console.log("Edit Time:", editTime)
-    }
+    this.timersService.allowUpdate();
   }
 
   disableTimersUpdate() {
