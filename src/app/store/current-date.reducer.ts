@@ -3,26 +3,20 @@ import { REHYDRATE } from 'redux-persist/constants';
 
 export function currentDateReducer(state: moment.Moment = moment(), action: any) {
   switch (action.type) {
-    case REHYDRATE:
-      return state;
     case 'SET_YEAR':
+      let newYear = state.clone();
+      newYear.year(action.year);
+      return newYear;
+    case 'SET_MONTH':
+      let newMonth = state.clone();
+      newMonth.month(action.month);
+      return newMonth;
+    case 'SET_DATE':
       let newDate = state.clone();
-      newDate.year(action.year);
-      console.log(newDate);
+      newDate.date(action.date);
       return newDate;
     case 'SET_CURRENT_DAY':
-      console.log(state);
       return state;
-      // this.ngRedux.select('SET_YEAR').subscribe((data: string) => this.currentDay = moment(data, 'YYYY'));
-      // return
-      // let user = action.payload.currentUser;
-      // return user ? Object.assign({}, user) : state;
-    // case UserActions.SET_TIMEZONE:
-    //   console.log('currentUserReducer#SET_TIMEZONE');
-    //   return Object.assign( {}, state, { timezone: action.payload.timezone } );
-    // case UserActions.SET_USER:
-    //   console.log("currentUserReducer#SET_USER");
-    //   return action.payload.currentUser;
     default:
       return state;
   }

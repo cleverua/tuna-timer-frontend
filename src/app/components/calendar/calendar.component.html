@@ -1,416 +1,145 @@
-<main class="main main-calendar">
-  <div class="fluid-container">
-    <div class="calendar-week">
-      <div class="calendar-week__top">
+<body>
+<div id="wrapper">
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="header__user">
+        <form>
+          <select>
+            <option>TunaTimerDevelop</option>
+            <option>@ Sergey_Sokolenko</option>
+            <option>@ Artem_Zhuravlev</option>
+            <option>@ Ivan_Ivanov</option>
+          </select>
+        </form>
+      </div>
+      <div class="sidebar-total">
+        <h3 class="sidebar-total__title">Your total for today is </h3>
+        <h4 class="sidebar-total__hour">8:20 <span>h</span></h4>
+        <button class="sidebar__task_btn">ADD TASK</button>
+      </div>
+    </div>
+
+    <ul class="sidebar-tabs">
+      <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>
+        Status</a></li>
+      <li class="sidebar-tabs__active"><a href="#"><i class="fa fa-bullhorn" aria-hidden="true"></i>
+        Report</a></li>
+    </ul>
+    <div class="sidebar-chanells">
+      <h3 class="sidebar-chanells__title"><i class="fa fa-code-fork" aria-hidden="true"></i> Chanel</h3>
+      <div class="sidebar-chanells__nav">
+        <form action="">
+          <div class="sidebar-chanells__nav-col">
+            <label for="ui_ux" class="ui_ux">#ui_ux</label>
+            <input type="checkbox"  class="checkbox" id="ui_ux">
+          </div>
+          <div class="sidebar-chanells__nav-col">
+            <label for="useful-links" class="useful-links">#useful-links</label>
+            <input type="checkbox"  class="checkbox" id="useful-links">
+          </div>
+          <div class="sidebar-chanells__nav-col">
+            <label for="tuna-timer" class="tuna-timer">#tuna-timer</label>
+            <input type="checkbox"  class="checkbox" id="tuna-timer">
+          </div>
+          <div class="sidebar-chanells__nav-col">
+            <label for="tuna-timer_dev" class="tuna-timer_dev">#tuna-timer_dev</label>
+            <input type="checkbox"  class="checkbox" id="tuna-timer_dev">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <button class="sidebar-chanells-btn">+ Add new chanel</button>
+    <div class="sidebar-color">
+      <!-- 			<h3 class="sidebar-color__title"><i class="fa fa-paint-brush" aria-hidden="true"></i> Color scheme</h3> -->
+      <div class="sidebar-color__nav">
         <ul>
-          <li class="calendar-week__year">
-            <a href="#" (click)="changeCurrentYear(currentDay.year() - 1)">{{currentDay.year() - 1}}</a>
-          </li>
-          <li *ngFor="let monthName of monthArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > currentDay.month() }" (click)="changeCurrentDay(i)">
-            <a >{{ monthName }}</a>
-          </li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
+          <li><a href="#"></a></li>
         </ul>
       </div>
+    </div>
+    <h3 class="footer-title">(c) CleverUA</h3>
+  </aside>
+  <div id="main-content">
 
-      <div class="calendar-week__calendar">
-        <h1 class="calendar-week__calendar-title">October 15 - 21</h1>
-        <div class="calendar-week__calendar-holder" >
-          <div class="calendar-week__calendar-week" *ngFor="let array of arrDaysInMonth; let last = last" [ngClass]="{'calendar-week__calendar-week-last': last}">
-            <ul >
-              <li *ngFor="let day of array"> {{day.weekDay}}
-                <button class="calendar-week__calendar-btn" [ngClass]="{'calendar-week__calendar-btn--active': day.day == currentDay.date()}" (click)="myaction($event)">{{day.day}}</button>
+    <main class="main main-calendar">
+      <div class="fluid-container">
+        <div class="calendar-week">
+          <div class="calendar-week__top">
+            <ul>
+              <li class="calendar-week__year">
+                <a (click)="changeYear(currentDay.year() - 1)">{{currentDay.year() - 1}}</a>
+              </li>
+              <li *ngFor="let monthName of monthsArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > currentDay.month() }" (click)="changeMonth(i)">
+                <a>{{ monthName }}</a>
               </li>
             </ul>
           </div>
-        </div>
-      </div>
 
-      <table class="ccalendar__week-table">
-        <tr class="ccalendar__week-table-days">
-          <td>Monday</td>
-          <td>Tuesday</td>
-          <td>Wednesday</td>
-          <td>Thursday</td>
-          <td>Friday</td>
-          <td>Saturday</td>
-          <td>Sunday</td>
-        </tr>
-        <tr class="calendar-week__sector-static">
-        <td class="calendar-week__sector--first calendar-day__event-desc--active">
-          <h5>1</h5>
-        </td>
-        <td>
-          <h5>2</h5>
-          <button class="calendar-week__sector-btn">
-            <span class="orange-border"></span>
-            7:00</button>
-        </td>
-        <td>
-          <h5>3</h5>
-          <button class="calendar-week__sector-btn">
-            <span class="green-border"></span>
-            8:21</button>
-        </td>
-        <td>
-          <h5>4</h5>
-          <button class="calendar-week__sector-btn">
-            <span class="orange-border"></span>
-            7:00</button>
-        </td>
-        <td>
-          <h5>5</h5>
-          <button class="calendar-week__sector-btn">
-            <span class="green-border"></span>
-            8:21</button>
-        </td>
-        <td><h5>6</h5></td>
-        <td><h5>7</h5></td>
-        </tr>
-      </table>
-      <div class="calendar-day__holder-tasks">
-        <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>9:00 - 10:50</h5>
+          <div class="calendar-week__calendar">
+            <h1 class="calendar-week__calendar-title">{{currentDay.format("MMMM DD") }}</h1>
+
+            <nav class="calendar-week__calendar-nav">
+              <ul>
+                <li class="active"><a>Day</a></li>
+                <li><a>Week</a></li>
+              </ul>
+            </nav>
+
+            <div class="calendar-week__calendar-holder" >
+              <div class="calendar-week__calendar-week" *ngFor="let weekArray of arrDaysInMonth; let last = last" [ngClass]="{'calendar-week__calendar-week-last': last}">
+                <ul >
+                  <li *ngFor="let day of weekArray"> {{day.format('dd')}}
+                    <button class="calendar-week__calendar-btn" [ngClass]="{'calendar-week__calendar-btn--active': today.date() == day.date() }" (click)="changeDate(day.format('DD-MM-YY'))">{{day.format('D')}}</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div class="calendar-day__col--active">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine" rows="1">Upgrade the project to rails 5.0</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn calendar-day__btn--active"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine">1:50</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
-        </div>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>10:50 - 12:50</h5>
-          </div>
-          <div class="calendar-day__col">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine" rows="1">Bushwick meh Blue Bottle pork.</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine">2:50</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
-        </div>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>13:00 - 13:50</h5>
-          </div>
-          <div class="calendar-day__col--active border-orange">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine" rows="1">Banjo tote bag bicycle rights.</textarea>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine" rows="1">3:50</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
-        </div>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>14:00 - 17:10</h5>
-          </div>
-          <div class="calendar-day__col">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine" rows="1">Bushwick meh Blue Bottle pork.</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine">1:50</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
-        </div>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>17:30 - 17:45</h5>
-          </div>
-          <div class="calendar-day__col--active border-gray">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine">Deciders table: county/city logo must be changes after pressing GO button</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine">2:30</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
-        </div>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>17:45 - 18:00</h5>
-          </div>
-          <div class="calendar-day__col">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine" rows="1">Bushwick meh Blue Bottle pork.</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine">1:50</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
-        </div>
-        <div class="calendar-day__holder-tasks-item">
-          <div class="calendar-day__hour">
-            <h5>18:10 - 19:10</h5>
-          </div>
-          <div class="calendar-day__col--active border-gray">
-            <form action="">
-              <div class="calendar-day__col-title">
-                <textarea class="calendar-day__col-title-field" data="rezine" rows="1">Retro occupy organic, stumpto.</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <div class="calendar-day__item-select">
-                <select>
-                  <option>#ui_ux</option>
-                  <option>#useful-links</option>
-                  <option>#tuna-timer</option>
-                  <option>#tuna-timer_dev</option>
-                </select>
-              </div>
-              <div class="calendar-day__btn"></div>
-              <div class="calendar-day__btn__item-hour">
-                <textarea class="calendar-day__btn__item-hour-field" data="rezine">2:40</textarea>
-                <div class="text_area_div"></div>
-              </div>
-              <button class="calendar-day__close"></button>
-            </form>
-          </div>
+
+          <table class="ccalendar__week-table">
+            <tr class="ccalendar__week-table-days">
+              <td>Monday</td>
+              <td>Tuesday</td>
+              <td>Wednesday</td>
+              <td>Thursday</td>
+              <td>Friday</td>
+              <td>Saturday</td>
+              <td>Sunday</td>
+            </tr>
+
+            <ng-container *ngFor="let weekArray of arrayForTilesOfMonth">
+              <tr class="calendar-week__sector-static">
+                <ng-container *ngFor="let day of weekArray">
+                  <td class="calendar-week__sector--first" [ngClass]="{ 'calendar-day__event-desc--active': day.format('DD-MM-YY') == currentDay.format('DD-MM-YY') }">
+                    <h5>{{day.format('D')}}</h5>
+                    <button (click)="changeDate(day.format('DD-MM-YY'))" class="calendar-week__sector-btn">
+                      <span class="orange-border"></span>
+                      7:00</button>
+                  </td>
+                </ng-container>
+              </tr>
+
+              <ng-container *ngIf="showTimers(weekArray)">
+                <tr>
+                  <td colspan="7">
+                    <div class="calendar-day__holder-tasks">
+                      <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
+                      <!--timerComponent-->
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+
+            </ng-container>
+
+          </table>
         </div>
       </div>
-      <table class="ccalendar__week-table">
-        <tr class="calendar-week__sector-total-col">
-          <td colspan="3" class="calendar-week__sector-total">
-            <div class="calendar-day__total-col">
-              <ul class="calendar-day__total-nav">
-                <li><a href="#">Print report</a></li>
-                <li><a href="#">Export report</a></li>
-              </ul>
-            </div>
-          </td>
-          <td colspan="4" class="calendar-week__sector-total">
-            <h2>Weekly hours Total: 32:13 h</h2>
-          </td>
-        </tr>
-        <tr class="calendar-week__sector-static">
-          <td>
-            <h5>8</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>
-              <span class="gray-border"></span>
-              7:29</button>
-          </td>
-          <td>
-            <h5>9</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span>
-              4:29</button>
-          </td>
-          <td>
-            <h5>10</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>
-              7:00</button>
-          </td>
-          <td>
-            <h5>11</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span>
-              3:19</button>
-          </td>
-          <td>
-            <h5>12</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span>
-              8:21</button>
-          </td>
-          <td>
-            <h5>13</h5>
-          </td>
-          <td>
-            <h5>14</h5>
-          </td>
-        </tr>
-        <tr class="calendar-week__sector-static">
-          <td>
-            <h5>15</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>
-              7:29</button>
-          </td>
-          <td>
-            <h5>16</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span>
-              4:29</button>
-          </td>
-          <td>
-            <h5>17</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>
-              7:00</button>
-          </td>
-          <td>
-            <h5>18</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span> 3:19</button>
-          </td>
-          <td>
-            <h5>19</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>
-              8:21</button>
-          </td>
-          <td>
-            <h5>20</h5>
-          </td>
-          <td>
-            <h5>21</h5>
-          </td>
-        </tr>
-        <tr class="calendar-week__sector-static">
-          <td>
-            <h5>22</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="gray-border"></span>
-              7:29</button>
-          </td>
-          <td>
-            <h5>23</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>
-              4:29</button>
-          </td>
-          <td>
-            <h5>24</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span>7:00</button>
-          </td>
-          <td>
-            <h5>25</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="orange-border"></span>3:19</button>
-          </td>
-          <td>
-            <h5>26</h5>
-            <button class="calendar-week__sector-btn">
-              <span class="green-border"></span>
-              8:21</button>
-          </td>
-          <td>
-            <h5>27</h5>
-          </td>
-          <td>
-            <h5>28</h5>
-          </td>
-        </tr>
-        <tr class="calendar-week__sector-static">
-          <td>
-            <h5>29</h5>
-            <button class="calendar-week__sector-btn">7:29</button>
-          </td>
-          <td>
-            <h5>30</h5>
-            <button class="calendar-week__sector-btn">4:29</button>
-          </td>
-          <td>
-            <h5>31</h5>
-            <button class="calendar-week__sector-btn">7:00</button>
-          </td>
-          <td>
-            <h5>1</h5>
-          </td>
-          <td>
-            <h5>2</h5>
-          </td>
-          <td>
-            <h5>3</h5>
-          </td>
-          <td>
-            <h5>4</h5>
-          </td>
-        </tr>
-      </table>
-    </div>
+    </main>
   </div>
-</main>
+</div>
+</body>
+
