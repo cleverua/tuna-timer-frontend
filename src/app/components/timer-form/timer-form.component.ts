@@ -29,7 +29,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
       this.subscription = timer.subscribe();
 
       this.subscription = timer.subscribe(() => {
-        if (!document.hidden) this.timersService.updateTimers(this.currentUser.jwt)
+        if (!document.hidden) this.timersService.updateTimers()
       });
     }
   }
@@ -40,16 +40,16 @@ export class TimerFormComponent implements OnInit, OnDestroy {
 
   startStopClickHandler() {
     if (this.timer.finished_at) {
-      this.timersService.createTimer(this.timer, this.currentUser.jwt)
+      this.timersService.createTimer(this.timer)
     } else {
-      this.timersService.stopTimer(this.timer, this.currentUser.jwt)
+      this.timersService.stopTimer(this.timer)
     }
   }
 
   updateTaskNameHandler(input: NgModel = null) {
     this.timersService.allowUpdate();
     if (input.pristine || input.invalid) return;
-    this.timersService.updateTimer(this.timer, this.currentUser.jwt);
+    this.timersService.updateTimer(this.timer);
   }
 
   selectProjectHandler(name: string) {
@@ -57,7 +57,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
     this.timer.project_ext_id = project.ext_id;
     this.timer.project_id = project.id;
 
-    this.timersService.updateTimer(this.timer, this.currentUser.jwt);
+    this.timersService.updateTimer(this.timer);
     this.timersService.allowUpdate();
   }
 
@@ -70,13 +70,17 @@ export class TimerFormComponent implements OnInit, OnDestroy {
       this.timer.edits.push({created_at: new(Date), team_user_id: this.currentUser.id, minutes: editTime});
       this.timer.minutes = this.timer.minutes + editTime;
 
-      this.timersService.updateTimer(this.timer, this.currentUser.jwt);
+      this.timersService.updateTimer(this.timer);
     } else {
       input.value = initialValue;
     }
 
     this.timersService.allowUpdate();
   }
+
+  deleteClickHandler(){
+    this.timersService.deleteTimer(this.timer);
+  };
 
   disableTimersUpdate() {
     this.timersService.disableUpdate();

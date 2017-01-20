@@ -12,8 +12,8 @@ export class TimersService {
 
   constructor(private apiService: ApiService, private ngRedux: NgRedux<AppState>) { }
 
-  createTimer(timer: Timer, jwt: string) {
-    this.apiService.createTimer(jwt, timer).subscribe(
+  createTimer(timer: Timer) {
+    this.apiService.createTimer(timer).subscribe(
       resp => {
         var timers: Timer[] = resp.data.map(t => { return new Timer(t) });
         this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
@@ -22,8 +22,8 @@ export class TimersService {
     );
   }
 
-  updateTimer(timer: Timer, jwt: string) {
-    this.apiService.updateTimer(jwt, timer).subscribe(
+  updateTimer(timer: Timer) {
+    this.apiService.updateTimer(timer).subscribe(
       resp => {
         this.ngRedux.dispatch({type: 'UPDATE_TIMER', timer: new Timer(resp.data)});
       },
@@ -31,8 +31,8 @@ export class TimersService {
     );
   }
 
-  stopTimer(timer: Timer, jwt: string) {
-    this.apiService.updateTimer(jwt, timer, true).subscribe(
+  stopTimer(timer: Timer) {
+    this.apiService.updateTimer(timer, true).subscribe(
       resp => {
         this.ngRedux.dispatch({type: 'UPDATE_TIMER', timer: new Timer(resp.data)});
       },
@@ -40,10 +40,25 @@ export class TimersService {
     );
   }
 
-  updateTimers(jwt: string) {
+  deleteTimer(timer: Timer) {
+    this.apiService.deleteTimer(timer).subscribe(
+      resp => {
+        if (resp.response_status.status == "200") {
+          console.log("start time delete");
+          this.ngRedux.dispatch({type: 'DELETE_TIMER', timer: timer});
+        } else {
+          // TODO: show error popup
+          console.log("ERROR", resp)
+        }
+      },
+      err  => { this.setError(err) }
+    );
+  }
+
+  updateTimers() {
     if (!this.canUpdate) { return }
 
-    this.apiService.getTasks(jwt).subscribe(
+    this.apiService.getTimers().subscribe(
       resp => {
         let timers: Timer[] = resp.data.map(t => { return new Timer(t) });
         this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});

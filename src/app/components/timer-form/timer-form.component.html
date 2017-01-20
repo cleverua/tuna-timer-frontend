@@ -23,12 +23,11 @@
       <div class="calendar-day__item-select">
         <select
           required
-          [(ngModel)]="timer.project_ext_name" name="timer_project"
+          name="timer_project"
+          [(ngModel)]="timer.project_ext_name"
           (ngModelChange)="selectProjectHandler($event)"
           (focus)="disableTimersUpdate()">
-          <option *ngFor="let project of projects">
-            {{project.ext_name}}
-          </option>
+          <option *ngFor="let project of projects">{{project.ext_name}}</option>
         </select>
       </div>
       <div
@@ -47,7 +46,7 @@
                value="{{timer.getMinutes() | minToHours}}">
         <div class="text_area_div"></div>
       </div>
-      <button class="calendar-day__close"></button>
+      <button class="calendar-day__close" (click)="deleteClickHandler()"></button>
     </form>
   </div>
 </div>

@@ -29,7 +29,10 @@ export class TeamsComponent implements OnInit {
 
     this.ngRedux.select('currentUser').subscribe((user: User) => {
       this.currentUser = user;
-      if (this.currentUser) this.fetchCurrentUserData();
+      if (this.currentUser) {
+        this.apiService.setAuthHeaders(user.jwt);
+        this.fetchCurrentUserData()
+      };
     });
   }
 
@@ -44,7 +47,7 @@ export class TeamsComponent implements OnInit {
   }
 
   private fetchCurrentUserData() {
-    this.apiService.getTasks(this.currentUser.jwt).subscribe(
+    this.apiService.getTimers().subscribe(
       resp => {
         let timersData: Timer[] = resp.data || [];
         let timers = timersData.map(t => { return new Timer(t) });
@@ -58,7 +61,7 @@ export class TeamsComponent implements OnInit {
       }
     );
 
-    this.apiService.getProjects(this.currentUser.jwt).subscribe(
+    this.apiService.getProjects().subscribe(
       resp => {
         //TODO put projects to store(if we need that)
         this.projects = resp.data;
