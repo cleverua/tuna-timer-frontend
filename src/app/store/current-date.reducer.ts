@@ -12,8 +12,7 @@ export function currentDateReducer(state: moment.Moment = moment(), action: any)
       newMonth.month(action.month);
       return newMonth;
     case 'SET_DATE':
-      let newDate = state.clone();
-      newDate.date(action.date);
+      let newDate = moment(action.date, 'DD-MM-YY');
       return newDate;
     case 'SET_CURRENT_DAY':
       return state;

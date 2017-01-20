@@ -72,7 +72,7 @@
               <li class="calendar-week__year">
                 <a (click)="changeYear(currentDay.year() - 1)">{{currentDay.year() - 1}}</a>
               </li>
-              <li *ngFor="let monthName of monthsArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > currentDay.month() }" (click)="changeMonth(i)">
+              <li *ngFor="let monthName of monthsArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > today.month() && currentDay.year() == today.year() }" (click)="changeMonth(i)">
                 <a>{{ monthName }}</a>
               </li>
             </ul>
@@ -127,7 +127,7 @@
                   <td colspan="7">
                     <div class="calendar-day__holder-tasks">
                       <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
-                      <!--timerComponent-->
+                      <!--<app-timer-form></app-timer-form>-->
                     </div>
                   </td>
                 </tr>
