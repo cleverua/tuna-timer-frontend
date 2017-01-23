@@ -26,6 +26,7 @@ import { AppErrorService } from "./services/app-error.service";
 import { TimerFormComponent } from './components/timer-form/timer-form.component';
 import { MinToHoursPipe } from './pipes/min-to-hours.pipe';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { DatesService } from "./services/dates.service";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     UserActions,
     AppErrorService,
     TimersService,
+    DatesService
   ],
   bootstrap: [AppComponent]
 })
