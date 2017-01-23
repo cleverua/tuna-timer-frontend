@@ -1,12 +1,7 @@
 <div class="calendar-day__holder-tasks-item">
-  <div class="calendar-day__hour">
-    <h5 *ngIf="timer.finished_at">
-      {{ timer.created_at | date:'H:mm' }} -
-      {{ timer.finished_at | date:'H:mm' }}
-    </h5>
-
-    <!--TODO: show some spinner for current timer-->
-    <h5 *ngIf="!timer.finished_at">{{ timer.created_at | date:'H:mm' }} - ...</h5>
+  <div class="calendar-day__hour" [ngSwitch]="timer.finished_at">
+    <h5 *ngSwitchCase="null">...</h5>
+    <h5 *ngSwitchDefault>{{ timer.created_at | date:'H:mm' }} - {{ timer.finished_at | date:'H:mm' }}</h5>
   </div>
   <div class="calendar-day__col--active">
     <form>
@@ -28,12 +23,11 @@
       <div class="calendar-day__item-select">
         <select
           required
-          [(ngModel)]="timer.project_ext_name" name="timer_project"
+          name="timer_project"
+          [(ngModel)]="timer.project_ext_name"
           (ngModelChange)="selectProjectHandler($event)"
           (focus)="disableTimersUpdate()">
-          <option *ngFor="let project of projects">
-            {{project.ext_name}}
-          </option>
+          <option *ngFor="let project of projects">{{project.ext_name}}</option>
         </select>
       </div>
       <div
@@ -43,20 +37,16 @@
       </div>
       <div class="calendar-day__btn__item-hour">
         <input type="text"
-               pattern="^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"
                class="calendar-day__btn__item-hour-field"
-               [(ngModel)]="timerMinutes"
-               [ngModelOptions]="{standalone: true}"
                #minutesInputElement
-               #minutesInput="ngModel"
                [disabled]="!timer.finished_at"
                (focus)="disableTimersUpdate()"
                (keydown.enter)="minutesInputElement.blur()"
-               (blur)="updateMinutesHandler(minutesInput)"
-               >
+               (blur)="updateMinutesHandler(minutesInputElement)"
+               value="{{timer.getMinutes() | minToHours}}">
         <div class="text_area_div"></div>
       </div>
-      <button class="calendar-day__close"></button>
+      <button class="calendar-day__close" (click)="deleteClickHandler()"></button>
     </form>
   </div>
 </div>

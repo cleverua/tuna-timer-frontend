@@ -16,7 +16,7 @@ export class TeamsComponent implements OnInit {
   private currentUser: User;
   private timers: Timer[];
   private projects: any;
-  private totalScore: string;
+  private totalScore: number;
 
   constructor(private ngRedux: NgRedux<AppState>, private router: Router, private apiService: ApiService) { }
 
@@ -29,7 +29,10 @@ export class TeamsComponent implements OnInit {
 
     this.ngRedux.select('currentUser').subscribe((user: User) => {
       this.currentUser = user;
-      if (this.currentUser) this.fetchCurrentUserData();
+      if (this.currentUser) {
+        this.apiService.setAuthHeaders(user.jwt);
+        this.fetchCurrentUserData()
+      };
     });
   }
 
@@ -39,14 +42,12 @@ export class TeamsComponent implements OnInit {
         let minutes = sum.getMinutes() + next.getMinutes();
         return new Timer({minutes: minutes, finished_at: new Date()})
       });
-      this.totalScore = total.minToHours();
-    } else {
-      this.totalScore = "0:00";
+      this.totalScore = total.minutes;
     }
   }
 
   private fetchCurrentUserData() {
-    this.apiService.getTasks(this.currentUser.jwt).subscribe(
+    this.apiService.getTimers().subscribe(
       resp => {
         let timersData: Timer[] = resp.data || [];
         let timers = timersData.map(t => { return new Timer(t) });
@@ -60,7 +61,7 @@ export class TeamsComponent implements OnInit {
       }
     );
 
-    this.apiService.getProjects(this.currentUser.jwt).subscribe(
+    this.apiService.getProjects().subscribe(
       resp => {
         //TODO put projects to store(if we need that)
         this.projects = resp.data;
