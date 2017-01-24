@@ -96,6 +96,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
   }
 
   getProjectsNames(){
+    if (!this.projects) return;
     return this.projects.map((p)=> {return p.ext_name})
   }
 }

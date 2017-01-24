@@ -1,5 +1,5 @@
 <div class="button">
-  <p *ngIf="isOpen">{{placeholder}}</p>
+  <span *ngIf="isOpen">{{placeholder}}</span>
   <p *ngIf="!isOpen" id="{{elementID}}">{{defaultValue}}</p>
 
   <ul [ngClass]="{'show': isOpen}">

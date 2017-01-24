@@ -4,6 +4,10 @@
   background: #cccccc;
 }
 
+.button p:before, .button li:before {
+  content: "#";
+}
+
 ul {
   display: none;
   position: absolute;
