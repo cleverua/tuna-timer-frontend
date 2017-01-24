@@ -99,7 +99,7 @@
               <div class="calendar-week__calendar-week" *ngFor="let weekArray of arrayDaysInMonth; let last = last" [ngClass]="{'calendar-week__calendar-week-last': last}">
                 <ul >
                   <li *ngFor="let day of weekArray"> {{day.format('dd')}}
-                    <button class="calendar-week__calendar-btn" [ngClass]="{'calendar-week__calendar-btn--active': today.date() == day.date() }" (click)="changeDate(day.format('DD-MM-YY'))">{{day.format('D')}}</button>
+                    <button class="calendar-week__calendar-btn" [ngClass]="{'calendar-week__calendar-btn--active': today.format('DD-MM-YY') == day.format('DD-MM-YY') }" (click)="changeDate(day.format('DD-MM-YY'))">{{day.format('D')}}</button>
                   </li>
                 </ul>
               </div>
@@ -123,9 +123,9 @@
               <ng-container *ngIf="viewToggle == 1">
                 <tr class="calendar-week__sector-static">
                   <ng-container *ngFor="let day of weekArray">
-                    <td class="calendar-week__sector--first" [ngClass]="{ 'calendar-day__event-desc--active': day.format('DD-MM-YY') == currentDay.format('DD-MM-YY') }">
+                    <td [ngClass]="{ 'calendar-day__event-desc--active': day.format('DD-MM-YY') == currentDay.format('DD-MM-YY'), 'month-table__item_new': day.format('MM') != currentDay.format('MM') }">
                       <h5>{{day.format('D')}}</h5>
-                      <button (click)="changeDate(day.format('DD-MM-YY'))" class="calendar-week__sector-btn">
+                      <button (click)="changeDate(day.format('DD-MM-YY'))" [ngClass]="{ 'calendar-week__sector-btn': day.format('MM') == currentDay.format('MM')}">
                         <span class="orange-border"></span>
                         7:00</button>
                     </td>
@@ -163,7 +163,7 @@
               <!--Show week template - toggle 2-->
               <ng-container *ngIf="viewToggle == 2">
                 <tr class="calendar-week__sector-static" [ngClass]="{ 'calendar-week__sector': showTimers(weekArray) }" >
-                  <td *ngFor="let day of weekArray" [ngClass]="{ 'calendar-week__sector--first': day.format('DD-MM-YY') == currentDay.format('DD-MM-YY') }">
+                  <td *ngFor="let day of weekArray" [ngClass]="{ 'calendar-week__sector--first': day.format('DD-MM-YY') == currentDay.format('DD-MM-YY'), 'month-table__item_new': day.format('MM') != currentDay.format('MM')  }">
                     <!--active week-->
                     <ng-container *ngIf="showTimers(weekArray)">
                       <div>
@@ -203,10 +203,10 @@
               <!--show month template - toggle 3-->
               <ng-container *ngIf="viewToggle == 3">
                 <tr class="month-table__col" >
-                  <td *ngFor="let day of weekArray">
+                  <td *ngFor="let day of weekArray" [ngClass]="{'month-table__item_new': day.format('MM') != currentDay.format('MM') }" >
                     <div>
                       <h5>{{day.format('D')}}</h5>
-                      <button class="month-table__btn" (click)="changeView('day')">
+                      <button class="month-table__btn" (click)="changeDate(day.format('DD-MM-YY'))">
                         <span class="month-table__btn_orange"></span>
                         <span class="month-table__btn_gray"></span>
                         3:50

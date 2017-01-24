@@ -48,10 +48,12 @@ export class CalendarComponent implements OnInit {
 
   changeDate(input: string) {
     this.ngRedux.dispatch({type: 'SET_DATE', date: input});
+    this.changeView('day');
   }
 
   changeMonth(input: number) {
-      this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
+    this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
+    this.changeView('month');
   }
 
   changeYear(input: number) {
