@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import { Subscription } from "rxjs";
 import * as moment from 'moment';
 
 import { NgRedux } from "ng2-redux";
 import { AppState } from "../../app.state";
 import {DatesService} from "../../services/dates.service";
+import {Timer} from "../../models/timer";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-calendar',
@@ -20,6 +22,10 @@ export class CalendarComponent implements OnInit {
   private subscription: Subscription;
   private viewToggle: number = 1;
 
+  @Input() timers: Timer[];
+  @Input() currentUser: User;
+  @Input() projects: any;
+
   constructor(private ngRedux: NgRedux<AppState>, private ds: DatesService) {}
 
   ngOnInit() {
@@ -29,7 +35,15 @@ export class CalendarComponent implements OnInit {
       this.currentDay = currentDay;
       this.arrayDaysInMonth = this.ds.getMonthDays(this.currentDay.format('YYYY-MM'));
       this.arrayForTilesOfMonth = this.ds.getTilesForCalendar(this.arrayDaysInMonth);
+      this.ngRedux.select('timers').subscribe((timers: Timer[]) => {
+        this.timers = timers;
+      });
+      this.ngRedux.select('currentUser').subscribe((user: User) => {
+        this.currentUser = user;
+      });
     });
+
+
   }
 
   changeDate(input: string) {
@@ -37,7 +51,7 @@ export class CalendarComponent implements OnInit {
   }
 
   changeMonth(input: number) {
-    this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
+      this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
   }
 
   changeYear(input: number) {

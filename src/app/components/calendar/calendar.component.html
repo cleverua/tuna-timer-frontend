@@ -71,12 +71,12 @@
               <li class="calendar-week__year">
                 <a (click)="changeYear(currentDay.year() - 1)">{{currentDay.year() - 1}}</a>
               </li>
-              <li *ngFor="let monthName of monthsArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > today.month() && currentDay.year() == today.year() }" (click)="changeMonth(i); changeView('month')">
+              <li *ngFor="let monthName of monthsArray; let i = index" [ngClass]="{'calendar-week--active': i == currentDay.month(), 'calendar-week__future': i > today.month() && currentDay.year() == today.year() }" (click)="changeMonth(i)">
                 <a>{{ monthName }}</a>
               </li>
-              <li class="calendar-week__year_last">
-                <a> 2017 </a>
-               </li>
+                <li [ngClass]="{ 'calendar-week__year_last': currentDay.year() >= today.year(), 'calendar-week__year': currentDay.year() < today.year() }" (click)="changeYear(currentDay.year() + 1)">
+                  <a> {{currentDay.year() + 1}} </a>
+                 </li>
             </ul>
           </div>
 
@@ -99,7 +99,7 @@
               <div class="calendar-week__calendar-week" *ngFor="let weekArray of arrayDaysInMonth; let last = last" [ngClass]="{'calendar-week__calendar-week-last': last}">
                 <ul >
                   <li *ngFor="let day of weekArray"> {{day.format('dd')}}
-                    <button class="calendar-week__calendar-btn" [ngClass]="{'calendar-week__calendar-btn--active': today.date() == day.date() }" (click)="changeDate(day.format('DD-MM-YY')); changeView('day')">{{day.format('D')}}</button>
+                    <button class="calendar-week__calendar-btn" [ngClass]="{'calendar-week__calendar-btn--active': today.date() == day.date() }" (click)="changeDate(day.format('DD-MM-YY'))">{{day.format('D')}}</button>
                   </li>
                 </ul>
               </div>
@@ -136,10 +136,12 @@
                 <ng-container *ngIf="showTimers(weekArray)">
                   <tr>
                     <td colspan="7">
+                      <!--TASKS-->
                       <div class="calendar-day__holder-tasks">
                         <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
-                        <!--<app-timer-form></app-timer-form>-->
+                        <app-timer-form *ngFor="let timer of timers" [timer]="timer" [projects]="projects" [currentUser]="currentUser"></app-timer-form>
                       </div>
+                      <!--TASKS-->
                     </td>
                   </tr>
                   <tr class="calendar-week__sector-total-col">

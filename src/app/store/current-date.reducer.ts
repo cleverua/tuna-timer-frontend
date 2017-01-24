@@ -6,17 +6,23 @@ export function currentDateReducer(state: moment.Moment = moment(), action: any)
     case 'SET_YEAR':
       let newYear = state.clone();
       newYear.year(action.year);
-      return newYear;
+      return checkDate(newYear);
     case 'SET_MONTH':
       let newMonth = state.clone();
       newMonth.month(action.month);
-      return newMonth;
+      return checkDate(newMonth);
     case 'SET_DATE':
       let newDate = moment(action.date, 'DD-MM-YY');
-      return newDate;
+      return checkDate(newDate);
+      // return newDate;
     case 'SET_CURRENT_DAY':
       return state;
     default:
       return state;
   }
+}
+
+function checkDate(input: moment.Moment) {
+  let today = moment();
+  return input <= today ? input : today;
 }
