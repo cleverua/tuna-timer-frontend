@@ -6,29 +6,31 @@
   <div class="calendar-day__col--active">
     <form>
       <div class="calendar-day__col-title">
-        <textarea class="calendar-day__col-title-field"
-                  rows="1"
-                  autosize
-                  name="taskName"
-                  [(ngModel)]="timer.task_name"
-                  required
-                  #nameInputElement
-                  #nameInput="ngModel"
-                  (keydown.enter)="nameInputElement.blur()"
-                  (blur)="updateTaskNameHandler(nameInput)"
-                  (focus)="disableTimersUpdate()">
+        <textarea
+          class="calendar-day__col-title-field"
+          rows="1"
+          autosize
+          name="taskName"
+          [(ngModel)]="timer.task_name"
+          required
+          #nameInputElement
+          #nameInput="ngModel"
+          (keydown.enter)="nameInputElement.blur()"
+          (blur)="updateTaskNameHandler(nameInput)"
+          (focus)="disableTimersUpdate()">
         </textarea>
         <div class="text_area_div"></div>
       </div>
       <div class="calendar-day__item-select">
-        <select
-          required
-          name="timer_project"
-          [(ngModel)]="timer.project_ext_name"
-          (ngModelChange)="selectProjectHandler($event)"
-          (focus)="disableTimersUpdate()">
-          <option *ngFor="let project of projects">{{project.ext_name}}</option>
-        </select>
+        <app-dropdown
+          [options]="getProjectsNames()"
+          [placeholder]="'Select project'"
+          [defaultValue]="timer.project_ext_name"
+          [elementID]="'timer-chanel-' + timer.id"
+          (select)="selectProjectHandler($event)"
+          (focus)="disableTimersUpdate()"
+          (blur)="allowTimersUpdate()">
+        </app-dropdown>
       </div>
       <div
         [ngClass]="{'calendar-day__btn-pause': !timer.finished_at}"
@@ -36,14 +38,15 @@
         (click)="startStopClickHandler()">
       </div>
       <div class="calendar-day__btn__item-hour">
-        <input type="text"
-               class="calendar-day__btn__item-hour-field"
-               #minutesInputElement
-               [disabled]="!timer.finished_at"
-               (focus)="disableTimersUpdate()"
-               (keydown.enter)="minutesInputElement.blur()"
-               (blur)="updateMinutesHandler(minutesInputElement)"
-               value="{{timer.getMinutes() | minToHours}}">
+        <input
+          type="text"
+          class="calendar-day__btn__item-hour-field"
+          #minutesInputElement
+          [disabled]="!timer.finished_at"
+          (focus)="disableTimersUpdate()"
+          (keydown.enter)="minutesInputElement.blur()"
+          (blur)="updateMinutesHandler(minutesInputElement)"
+          value="{{timer.getMinutes() | minToHours}}">
         <div class="text_area_div"></div>
       </div>
       <button class="calendar-day__close" (click)="deleteClickHandler()"></button>

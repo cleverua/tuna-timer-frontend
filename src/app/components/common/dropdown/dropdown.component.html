@@ -1,0 +1,8 @@
+<div class="button">
+  <p *ngIf="isOpen">{{placeholder}}</p>
+  <p *ngIf="!isOpen" id="{{elementID}}">{{defaultValue}}</p>
+
+  <ul [ngClass]="{'show': isOpen}">
+    <li *ngFor="let option of options" id="{{elementID + '-option'}}">{{option}}</li>
+  </ul>
+</div>
