@@ -1,0 +1,21 @@
+.button {
+  width: 100%;
+  position: relative;
+  background: #cccccc;
+}
+
+.button p:before, .button li:before {
+  content: "#";
+}
+
+ul {
+  display: none;
+  position: absolute;
+  width: inherit;
+  z-index: 1;
+}
+
+.show {
+  display: block;
+  background: white;
+}

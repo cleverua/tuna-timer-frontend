@@ -47,18 +47,23 @@ export class TimerFormComponent implements OnInit, OnDestroy {
   }
 
   updateTaskNameHandler(input: NgModel = null) {
-    this.timersService.allowUpdate();
+    this.allowTimersUpdate();
     if (input.pristine || input.invalid) return;
     this.timersService.updateTimer(this.timer);
   }
 
   selectProjectHandler(name: string) {
+    if (this.timer.project_ext_name == name) {
+      return
+    }
+
     let project = this.projects.find(p => {return p.ext_name === name});
     this.timer.project_ext_id = project.ext_id;
     this.timer.project_id = project.id;
+    this.timer.project_ext_name = project.ext_name;
 
     this.timersService.updateTimer(this.timer);
-    this.timersService.allowUpdate();
+    this.allowTimersUpdate();
   }
 
   updateMinutesHandler(input: HTMLInputElement) {
@@ -75,7 +80,7 @@ export class TimerFormComponent implements OnInit, OnDestroy {
       input.value = initialValue;
     }
 
-    this.timersService.allowUpdate();
+    this.allowTimersUpdate();
   }
 
   deleteClickHandler(){
@@ -84,5 +89,14 @@ export class TimerFormComponent implements OnInit, OnDestroy {
 
   disableTimersUpdate() {
     this.timersService.disableUpdate();
+  }
+
+  allowTimersUpdate() {
+    this.timersService.allowUpdate();
+  }
+
+  getProjectsNames(){
+    if (!this.projects) return;
+    return this.projects.map((p)=> {return p.ext_name})
   }
 }

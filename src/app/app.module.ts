@@ -27,6 +27,7 @@ import { TimerFormComponent } from './components/timer-form/timer-form.component
 import { MinToHoursPipe } from './pipes/min-to-hours.pipe';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DatesService } from "./services/dates.service";
+import { DropdownComponent } from './components/common/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DatesService } from "./services/dates.service";
     Autosize,
     MinToHoursPipe,
     CalendarComponent,
+    DropdownComponent,
   ],
   imports: [
     BrowserModule,
