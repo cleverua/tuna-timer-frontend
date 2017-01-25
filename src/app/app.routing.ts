@@ -8,7 +8,7 @@ import { AppComponent } from "./app.component";
 const APP_ROUTES: Routes = [
   { path: '', component: AppComponent },
   { path: 'activate_user', component: ActivateComponent },
-  { path: 'teams/:id', component: TeamsComponent },
+  { path: 'teams/:name', component: TeamsComponent },
   { path: 'errors/:status', component: ErrorsComponent },
   { path: '**', redirectTo: '' }
 ];

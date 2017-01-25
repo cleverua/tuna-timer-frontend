@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
 
       if (!userProgress.isLoading() && rehydratedProgress.isLoaded()) {
         if (this.currentUser) {
-          this.router.navigate(['/teams', this.currentUser.teamId]);
+          this.router.navigate(['/teams', this.currentUser.extTeamName]);
         } else {
           let error = new AppError(400, "please login from Slack application");
           this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: error});
