@@ -10,12 +10,10 @@ export function currentDateReducer(state: moment.Moment = moment(), action: any)
     case 'SET_MONTH':
       let newMonth = state.clone();
       newMonth.month(action.month);
-      console.log(newMonth);
       return checkDate(newMonth);
     case 'SET_DATE':
       let newDate = moment(action.date, 'DD-MM-YY');
       return checkDate(newDate);
-      // return newDate;
     case 'SET_CURRENT_DAY':
       return state;
     default:

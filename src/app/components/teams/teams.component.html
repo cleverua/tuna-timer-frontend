@@ -1,17 +1,1 @@
-<table class="calendar__week-table">
-  <tr class="calendar-week__sector-total-col">
-    <td colspan="3" class="calendar-week__sector-total">
-      <div class="calendar-day__total-col">
-        <ul class="calendar-day__total-nav">
-          <li><a href="#">Print report</a></li>
-          <li><a href="#">Export report</a></li>
-        </ul>
-      </div>
-    </td>
-    <td colspan="4" class="calendar-week__sector-total">
-      <h2>{{totalScore | minToHours}}</h2>
-    </td>
-  </tr>
-</table>
-
-<app-calendar [timers]="timers" [projects]="projects" [currentUser]="currentUser"></app-calendar>
+<app-calendar [projects]="projects" [currentUser]="currentUser"></app-calendar>
