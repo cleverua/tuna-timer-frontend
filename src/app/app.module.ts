@@ -29,6 +29,7 @@ import { DatesService } from "./services/dates.service";
 import { DropdownComponent } from './components/common/dropdown/dropdown.component';
 import {DayReportComponent} from "./components/day-report/day-report.component";
 import {WeekReportComponent} from "./components/week-report/week-report.component";
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {WeekReportComponent} from "./components/week-report/week-report.componen
     MinToHoursPipe,
     DropdownComponent,
     DayReportComponent,
-    WeekReportComponent
+    WeekReportComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

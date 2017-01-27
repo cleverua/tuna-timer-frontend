@@ -1,68 +1,8 @@
 <div id="wrapper">
-  <aside id="sidebar">
-    <div class="sidebar-header">
-      <div class="header__user">
-        <form>
-          <select>
-            <option>TunaTimerDevelop</option>
-            <option>@ Sergey_Sokolenko</option>
-            <option>@ Artem_Zhuravlev</option>
-            <option>@ Ivan_Ivanov</option>
-          </select>
-        </form>
-      </div>
-      <div class="sidebar-total">
-        <h3 class="sidebar-total__title">Your total for today is </h3>
-        <h4 class="sidebar-total__hour">8:20 <span>h</span></h4>
-        <button class="sidebar__task_btn">ADD TASK</button>
-      </div>
-    </div>
 
-    <ul class="sidebar-tabs">
-      <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>
-        Status</a></li>
-      <li class="sidebar-tabs__active"><a href="#"><i class="fa fa-bullhorn" aria-hidden="true"></i>
-        Report</a></li>
-    </ul>
-    <div class="sidebar-chanells">
-      <h3 class="sidebar-chanells__title"><i class="fa fa-code-fork" aria-hidden="true"></i> Chanel</h3>
-      <div class="sidebar-chanells__nav">
-        <form action="">
-          <div class="sidebar-chanells__nav-col">
-            <label for="ui_ux" class="ui_ux">#ui_ux</label>
-            <input type="checkbox"  class="checkbox" id="ui_ux">
-          </div>
-          <div class="sidebar-chanells__nav-col">
-            <label for="useful-links" class="useful-links">#useful-links</label>
-            <input type="checkbox"  class="checkbox" id="useful-links">
-          </div>
-          <div class="sidebar-chanells__nav-col">
-            <label for="tuna-timer" class="tuna-timer">#tuna-timer</label>
-            <input type="checkbox"  class="checkbox" id="tuna-timer">
-          </div>
-          <div class="sidebar-chanells__nav-col">
-            <label for="tuna-timer_dev" class="tuna-timer_dev">#tuna-timer_dev</label>
-            <input type="checkbox"  class="checkbox" id="tuna-timer_dev">
-          </div>
-        </form>
-      </div>
-    </div>
+  <app-aside></app-aside>
 
-    <button class="sidebar-chanells-btn">+ Add new chanel</button>
-    <div class="sidebar-color">
-      <!-- 			<h3 class="sidebar-color__title"><i class="fa fa-paint-brush" aria-hidden="true"></i> Color scheme</h3> -->
-      <div class="sidebar-color__nav">
-        <ul>
-          <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
-        </ul>
-      </div>
-    </div>
-    <h3 class="footer-title">(c) CleverUA</h3>
-  </aside>
   <div id="main-content">
-
     <main class="main main-calendar">
       <div class="fluid-container">
         <div class="calendar-week">
@@ -80,11 +20,10 @@
                 (click)="changeMonth(i)">
                 <a>{{ monthName }}</a>
               </li>
-                <li [ngClass]="{ 'calendar-week__year_last': currentDay.year() >= today.year(),
-                                'calendar-week__year': currentDay.year() < today.year() }"
-                    (click)="changeYear(currentDay.year() + 1)">
-                  <a> {{currentDay.year() + 1}} </a>
-                </li>
+              <li class="calendar-week__year_last" [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
+                  (click)="changeYear(currentDay.year() + 1)">
+                <a> {{currentDay.year() + 1}} </a>
+              </li>
             </ul>
           </div>
 
