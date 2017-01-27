@@ -1,30 +1,29 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from "rxjs";
 import * as moment from 'moment';
 
 import { NgRedux } from "ng2-redux";
 import { AppState } from "../../app.state";
 import { DatesService } from "../../services/dates.service";
-import { Timer } from "../../models/timer";
-import { User } from "../../models/user";
+// import { Timer } from "../../models/timer";
+// import { User } from "../../models/user";
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css']
+  selector: 'app-week-report',
+  templateUrl: 'week-report.component.html',
+  styleUrls: ['week-report.component.css']
 })
-
-export class CalendarComponent implements OnInit, OnDestroy {
+export class WeekReportComponent implements OnInit, OnDestroy {
   private currentDay; today: moment.Moment;
   private monthsArray: string[] = moment.monthsShort();
   private arrayDaysInMonth: moment.Moment[][];
   private arrayForTilesOfMonth: moment.Moment[][];
   private subscription: Subscription;
-  private viewToggle: string = 'day';
-  private timers: Timer[];
+  private viewToggle: string = 'week';
+  // private timers: Timer[];
 
-  @Input() currentUser: User;
-  @Input() projects: any;
+  // @Input() currentUser: User;
+  // @Input() projects: any;
 
   constructor(private ngRedux: NgRedux<AppState>, private ds: DatesService) {}
 
@@ -35,30 +34,21 @@ export class CalendarComponent implements OnInit, OnDestroy {
       this.currentDay = currentDay;
       this.arrayDaysInMonth = this.ds.getMonthDays(this.currentDay.format('YYYY-MM'));
       this.arrayForTilesOfMonth = this.ds.getTilesForCalendar(this.arrayDaysInMonth);
-      this.ngRedux.select('timers').subscribe((timers: Timer[]) => {
-        this.timers = timers;
-      });
     });
   }
 
-  changeDate(input: string) {
+  changeDate(input: string, state: string = 'week') {
     this.ngRedux.dispatch({type: 'SET_DATE', date: input});
+    this.changeView(state);
   }
 
-  changeMonth(input: number) {
+  changeMonth(input: number, state: string = 'month') {
     this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
+    this.changeView(state);
   }
 
   changeYear(input: number) {
     this.ngRedux.dispatch({type: 'SET_YEAR', year: input});
-  }
-
-  showTimers(input: moment.Moment[]) {
-    for (let i = 0; i < input.length; i++) {
-      if (input[i].format('DD-MM') == this.currentDay.format('DD-MM')) {
-        return true;
-      }
-    }
   }
 
   changeView(input: string) {
@@ -78,13 +68,16 @@ export class CalendarComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkToggle() {
-    if (this.viewToggle == 'month') {
-      this.changeView('day');
+  showTimers(input: moment.Moment[]) {
+    for (let i = 0; i < input.length; i++) {
+      if (input[i].format('DD-MM') == this.currentDay.format('DD-MM')) {
+        return true;
+      }
     }
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
 }

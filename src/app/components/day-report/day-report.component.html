@@ -77,7 +77,7 @@
                 *ngFor="let monthName of monthsArray; let i = index"
                 [ngClass]="{'calendar-week--active': i == currentDay.month(),
                             'calendar-week__future': futureMonth(i) }"
-                (click)="changeMonth(i); changeView('month')">
+                (click)="changeMonth(i)">
                 <a>{{ monthName }}</a>
               </li>
                 <li [ngClass]="{ 'calendar-week__year_last': currentDay.year() >= today.year(),
@@ -95,16 +95,16 @@
               <ul>
                 <ng-container
                   *ngIf=" showTodayButton() ">
-                  <li (click)="changeDate(today.format('DD-MM-YY')); changeView('day')">
+                  <li (click)="changeDate(today.format('DD-MM-YY'))">
                     <a>Today</a>
                   </li>
                 </ng-container>
 
-                <li [ngClass]="{'active': viewToggle == 'day'}" (click)="changeView('day')">
+                <li class="active">
                   <a>Day</a>
                 </li>
 
-                <li [ngClass]="{'active': viewToggle == 'week'}" (click)="changeView('week')">
+                <li [routerLink]="['../week-report']">
                   <a>Week</a>
                 </li>
               </ul>
@@ -121,7 +121,7 @@
                     <button
                       class="calendar-week__calendar-btn"
                       [ngClass]="{'calendar-week__calendar-btn--active': today.format('DD-MM-YY') == day.format('DD-MM-YY') }"
-                      (click)="changeDate(day.format('DD-MM-YY')); checkToggle()"
+                      (click)="changeDate(day.format('DD-MM-YY'));"
                     >
                       {{day.format('D')}}
                     </button>
@@ -152,7 +152,7 @@
                                     'month-table__item_new': day.format('MM') != currentDay.format('MM') }">
                       <h5>{{day.format('D')}}</h5>
                       <button
-                        (click)="changeDate(day.format('DD-MM-YY')); changeView('day');"
+                        (click)="changeDate(day.format('DD-MM-YY'))"
                         [ngClass]="{ 'calendar-week__sector-btn': day.format('MM') == currentDay.format('MM')}"
                       >
                         <span class="orange-border"></span>
@@ -168,11 +168,11 @@
                       <!--TASKS-->
                       <div class="calendar-day__holder-tasks">
                         <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
-                        <app-timer-form *ngFor="let timer of timers"
-                                        [timer]="timer"
-                                        [projects]="projects"
-                                        [currentUser]="currentUser"
-                        ></app-timer-form>
+                        <!--<app-timer-form *ngFor="let timer of timers"-->
+                                        <!--[timer]="timer"-->
+                                        <!--[projects]="projects"-->
+                                        <!--[currentUser]="currentUser"-->
+                        <!--&gt;</app-timer-form>-->
                       </div>
                       <!--TASKS-->
                     </td>
@@ -193,55 +193,6 @@
                 </ng-container>  <!--show area with tasks-->
               </ng-container>              <!--end toggle day-->
 
-              <!--Show week template - toggle week-->
-              <ng-container *ngIf="viewToggle == 'week'">
-                <tr
-                  class="calendar-week__sector-static"
-                  [ngClass]="{ 'calendar-week__sector': showTimers(weekArray) }"
-                >
-                  <td
-                    *ngFor="let day of weekArray"
-                    [ngClass]="{ 'month-table__item_new': day.format('MM') != currentDay.format('MM') }"
-                  >
-                    <!--active week-->
-                    <ng-container *ngIf="showTimers(weekArray)">
-                      <div>
-                        <h5>{{day.format('D')}}</h5>
-                          <button class="tuna-timer-btn">#tuna-timer</button>
-                          <h6>Total: 8:00 h</h6>
-                      </div>
-                    </ng-container>     <!--end active week-->
-
-                    <!--another weeks-->
-                    <ng-container *ngIf="!showTimers(weekArray)">
-                      <h5>{{day.format('D')}}</h5>
-                      <button
-                        class="calendar-week__sector-btn"
-                        (click)="changeDate(day.format('DD-MM-YY')); changeView('week')"
-                      >
-                        <span class="orange-border"></span>
-                        4:29</button>
-                    </ng-container>     <!--end another weeks-->
-                  </td>
-                </tr>
-                <!--Week Total-->
-                <ng-container *ngIf="showTimers(weekArray)">
-                  <tr class="calendar-week__sector-total-col">
-                    <td colspan="3" class="calendar-week__sector-total">
-                      <div class="calendar-day__total-col">
-                        <ul class="calendar-day__total-nav">
-                          <li><a href="#">Print report</a></li>
-                          <li><a href="#">Export report</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                    <td colspan="4" class="calendar-week__sector-total">
-                      <h2>Weekly hours Total: 32:13 h</h2>
-                    </td>
-                  </tr>
-                </ng-container>
-              </ng-container>     <!--end toggle week-->
-
               <!--show month template - toggle month-->
               <ng-container *ngIf="viewToggle == 'month'">
                 <tr class="month-table__col" >
@@ -252,7 +203,7 @@
                       <h5>{{day.format('D')}}</h5>
                       <button
                         class="month-table__btn"
-                        (click)="changeDate(day.format('DD-MM-YY')); changeView('day')"
+                        (click)="changeDate(day.format('DD-MM-YY'))"
                       >
                         <span class="month-table__btn_orange"></span>
                         <span class="month-table__btn_gray"></span>

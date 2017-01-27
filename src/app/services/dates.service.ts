@@ -19,7 +19,7 @@ export class DatesService {
 
     /*Condition if month not start with Monday               */
     if (firstDay) {
-      /*Create first not full week                             */
+      /*Create first not full week-report                             */
       for (let j = 1; j <= daysInFirstWeek; j++) {
         let dayOfMonth = inputMoment.date(j);
         daysArray.push(moment(dayOfMonth));
@@ -27,7 +27,7 @@ export class DatesService {
       arrayOfWeeks.push(daysArray);
       daysArray = [];
     }
-    /* Other part of month with not full week in the end    */
+    /* Other part of month with not full week-report in the end    */
     for (fullWeek; fullWeek < ( daysInMonth - daysInFirstWeek ) / 7; fullWeek++) {
       for (let j = 1; j <= 7; j++) {
         let dayOfMonth = inputMoment.date(j + daysInFirstWeek + fullWeek * 7);

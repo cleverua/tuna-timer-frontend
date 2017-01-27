@@ -25,9 +25,10 @@ import { ErrorsComponent } from './components/errors/errors.component';
 import { AppErrorService } from "./services/app-error.service";
 import { TimerFormComponent } from './components/timer-form/timer-form.component';
 import { MinToHoursPipe } from './pipes/min-to-hours.pipe';
-import { CalendarComponent } from './components/calendar/calendar.component';
 import { DatesService } from "./services/dates.service";
 import { DropdownComponent } from './components/common/dropdown/dropdown.component';
+import {DayReportComponent} from "./components/day-report/day-report.component";
+import {WeekReportComponent} from "./components/week-report/week-report.component";
 
 @NgModule({
   declarations: [
@@ -38,8 +39,9 @@ import { DropdownComponent } from './components/common/dropdown/dropdown.compone
     TimerFormComponent,
     Autosize,
     MinToHoursPipe,
-    CalendarComponent,
     DropdownComponent,
+    DayReportComponent,
+    WeekReportComponent
   ],
   imports: [
     BrowserModule,
