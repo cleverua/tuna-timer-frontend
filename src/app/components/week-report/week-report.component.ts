@@ -37,47 +37,44 @@ export class WeekReportComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeDate(input: string, state: string = 'week') {
-    this.ngRedux.dispatch({type: 'SET_DATE', date: input});
-    this.changeView(state);
+  changeDate(date: moment.Moment) {
+    this.ngRedux.dispatch({type: 'SET_DATE', date: date.format('DD-MM-YY')});
+    this.changeView('week');
   }
 
-  changeMonth(input: number, state: string = 'month') {
+  changeMonth(input: number) {
     this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
-    this.changeView(state);
+    this.changeView('month');
   }
 
-  changeYear(input: number) {
-    this.ngRedux.dispatch({type: 'SET_YEAR', year: input});
+  changeYear(offset: number) {
+    let year: number = this.currentDay.year() + offset;
+    this.ngRedux.dispatch({type: 'SET_YEAR', year: year});
   }
 
   changeView(input: string) {
     this.viewToggle = input;
   }
 
-  futureMonth(i: number) {
-    if (i > this.today.month() && this.currentDay.year() == this.today.year()) {
-      return true;
-    }
+  futureMonth(i: number): boolean {
+    return i > this.today.month() && this.currentDay.year() == this.today.year()
   }
 
-  showTodayButton() {
-    if (this.currentDay.format('MM') != this.today.format('MM') ||
-      this.currentDay.format('YYYY') != this.today.format('YYYY')) {
-      return true;
-    }
+  showTodayButton(): boolean {
+    return this.currentDay.format('MM') != this.today.format('MM') ||
+      this.currentDay.format('YYYY') != this.today.format('YYYY')
   }
 
-  showTimers(input: moment.Moment[]) {
+  showTimers(input: moment.Moment[]): boolean {
     for (let i = 0; i < input.length; i++) {
       if (input[i].format('DD-MM') == this.currentDay.format('DD-MM')) {
-        return true;
+        return true
       }
     }
+    return false
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
 }

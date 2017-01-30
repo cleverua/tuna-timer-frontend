@@ -9,9 +9,7 @@
           <div class="calendar-week__top">
             <ul>
               <li class="calendar-week__year">
-                <a (click)="changeYear(currentDay.year() - 1)">
-                  {{currentDay.year() - 1}}
-                </a>
+                <a (click)="changeYear(-1)">{{currentDay.year() - 1}}</a>
               </li>
               <li
                 *ngFor="let monthName of monthsArray; let i = index"
@@ -20,21 +18,22 @@
                 (click)="changeMonth(i)">
                 <a>{{ monthName }}</a>
               </li>
-              <li class="calendar-week__year_last" [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
-                  (click)="changeYear(currentDay.year() + 1)">
-                <a> {{currentDay.year() + 1}} </a>
+              <li class="calendar-week__year_last"
+                  [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
+                  (click)="changeYear(1)">
+                <a>{{currentDay.year() + 1}}</a>
               </li>
             </ul>
           </div>
 
           <div class="calendar-week__calendar">
-            <h1 class="calendar-week__calendar-title">{{currentDay.format("MMMM DD") }}</h1>
+            <h1 class="calendar-week__calendar-title">{{currentDay.format("MMMM DD")}}</h1>
 
             <nav class="calendar-week__calendar-nav">
               <ul>
                 <ng-container
-                  *ngIf=" showTodayButton() ">
-                  <li (click)="changeDate(today.format('DD-MM-YY'))">
+                  *ngIf="showTodayButton()">
+                  <li (click)="changeDate(today)">
                     <a>Today</a>
                   </li>
                 </ng-container>
@@ -56,11 +55,11 @@
                 [ngClass]="{'calendar-week__calendar-week-last': last}"
               >
                 <ul>
-                  <li *ngFor="let day of weekArray"> {{day.format('dd')}}
+                  <li *ngFor="let day of weekArray">{{day.format('dd')}}
                     <button
                       class="calendar-week__calendar-btn"
                       [ngClass]="{'calendar-week__calendar-btn--active': today.format('DD-MM-YY') == day.format('DD-MM-YY') }"
-                      (click)="changeDate(day.format('DD-MM-YY'));"
+                      (click)="changeDate(day);"
                     >
                       {{day.format('D')}}
                     </button>
@@ -91,7 +90,7 @@
                                     'month-table__item_new': day.format('MM') != currentDay.format('MM') }">
                       <h5>{{day.format('D')}}</h5>
                       <button
-                        (click)="changeDate(day.format('DD-MM-YY'))"
+                        (click)="changeDate(day)"
                         [ngClass]="{ 'calendar-week__sector-btn': day.format('MM') == currentDay.format('MM')}"
                       >
                         <span class="orange-border"></span>
@@ -107,11 +106,11 @@
                       <!--TASKS-->
                       <div class="calendar-day__holder-tasks">
                         <h5><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasks</h5>
-                        <!--<app-timer-form *ngFor="let timer of timers"-->
-                                        <!--[timer]="timer"-->
-                                        <!--[projects]="projects"-->
-                                        <!--[currentUser]="currentUser"-->
-                        <!--&gt;</app-timer-form>-->
+                        <app-timer-form *ngFor="let timer of timers"
+                                        [timer]="timer"
+                                        [projects]="projects"
+                                        [currentUser]="currentUser"
+                        ></app-timer-form>
                       </div>
                       <!--TASKS-->
                     </td>
@@ -142,7 +141,7 @@
                       <h5>{{day.format('D')}}</h5>
                       <button
                         class="month-table__btn"
-                        (click)="changeDate(day.format('DD-MM-YY'))"
+                        (click)="changeDate(day)"
                       >
                         <span class="month-table__btn_orange"></span>
                         <span class="month-table__btn_gray"></span>
