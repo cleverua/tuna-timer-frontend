@@ -1,31 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from "rxjs";
+import { NgRedux } from "ng2-redux";
 import * as moment from 'moment';
 
-import { NgRedux } from "ng2-redux";
 import { AppState } from "../../app.state";
 import { DatesService } from "../../services/dates.service";
-// import { Timer } from "../../models/timer";
-// import { User } from "../../models/user";
+import { DayReportComponent } from "../day-report/day-report.component";
 
 @Component({
   selector: 'app-week-report',
   templateUrl: 'week-report.component.html',
   styleUrls: ['week-report.component.css']
 })
-export class WeekReportComponent implements OnInit, OnDestroy {
-  private currentDay; today: moment.Moment;
-  private monthsArray: string[] = moment.monthsShort();
-  private arrayDaysInMonth: moment.Moment[][];
-  private arrayForTilesOfMonth: moment.Moment[][];
-  private subscription: Subscription;
-  private viewToggle: string = 'week';
-  // private timers: Timer[];
+export class WeekReportComponent extends DayReportComponent implements OnInit, OnDestroy {
 
-  // @Input() currentUser: User;
-  // @Input() projects: any;
-
-  constructor(private ngRedux: NgRedux<AppState>, private ds: DatesService) {}
+  constructor(ngRedux: NgRedux<AppState>, ds: DatesService) {
+    super(ngRedux, ds);
+    this.viewToggle = 'week'
+  }
 
   ngOnInit() {
     this.ngRedux.dispatch({type: 'SET_CURRENT_DAY'});
@@ -40,41 +31,5 @@ export class WeekReportComponent implements OnInit, OnDestroy {
   changeDate(date: moment.Moment) {
     this.ngRedux.dispatch({type: 'SET_DATE', date: date.format('DD-MM-YY')});
     this.changeView('week');
-  }
-
-  changeMonth(input: number) {
-    this.ngRedux.dispatch({type: 'SET_MONTH', month: input});
-    this.changeView('month');
-  }
-
-  changeYear(offset: number) {
-    let year: number = this.currentDay.year() + offset;
-    this.ngRedux.dispatch({type: 'SET_YEAR', year: year});
-  }
-
-  changeView(input: string) {
-    this.viewToggle = input;
-  }
-
-  futureMonth(i: number): boolean {
-    return i > this.today.month() && this.currentDay.year() == this.today.year()
-  }
-
-  showTodayButton(): boolean {
-    return this.currentDay.format('MM') != this.today.format('MM') ||
-      this.currentDay.format('YYYY') != this.today.format('YYYY')
-  }
-
-  showTimers(input: moment.Moment[]): boolean {
-    for (let i = 0; i < input.length; i++) {
-      if (input[i].format('DD-MM') == this.currentDay.format('DD-MM')) {
-        return true
-      }
-    }
-    return false
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

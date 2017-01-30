@@ -16,7 +16,7 @@
                 [ngClass]="{'calendar-week--active': i == currentDay.month(),
                             'calendar-week__future': futureMonth(i) }"
                 (click)="changeMonth(i)">
-                <a>{{ monthName }}</a>
+                <a>{{monthName}}</a>
               </li>
               <li class="calendar-week__year_last"
                   [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
@@ -94,7 +94,8 @@
                         [ngClass]="{ 'calendar-week__sector-btn': day.format('MM') == currentDay.format('MM')}"
                       >
                         <span class="orange-border"></span>
-                        7:00</button>
+                        7:00
+                      </button>
                     </td>
                   </ng-container>
                 </tr>

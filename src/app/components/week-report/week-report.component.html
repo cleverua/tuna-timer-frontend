@@ -18,8 +18,9 @@
                 (click)="changeMonth(i)">
                 <a>{{monthName}}</a>
               </li>
-              <li class="calendar-week__year_last" [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
-                  (click)="changeYear(-1)">
+              <li class="calendar-week__year_last"
+                  [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
+                  (click)="changeYear(1)">
                 <a>{{currentDay.year() + 1}}</a>
               </li>
             </ul>
