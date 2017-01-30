@@ -1,8 +1,8 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import { Subscription } from "rxjs";
+import { NgRedux } from "ng2-redux";
 import * as moment from 'moment';
 
-import { NgRedux } from "ng2-redux";
 import { AppState } from "../../app.state";
 import { DatesService } from "../../services/dates.service";
 import { Timer } from "../../models/timer";
@@ -15,18 +15,18 @@ import { User } from "../../models/user";
 })
 
 export class DayReportComponent implements OnInit, OnDestroy {
-  private currentDay; today: moment.Moment;
-  private monthsArray: string[] = moment.monthsShort();
-  private arrayDaysInMonth: moment.Moment[][];
-  private arrayForTilesOfMonth: moment.Moment[][];
-  private subscription: Subscription;
-  private viewToggle: string = 'day';
+  protected currentDay; today: moment.Moment;
+  protected monthsArray: string[] = moment.monthsShort();
+  protected arrayDaysInMonth: moment.Moment[][];
+  protected arrayForTilesOfMonth: moment.Moment[][];
+  protected subscription: Subscription;
+  protected viewToggle: string = 'day';
   private timers: Timer[];
 
-  @Input() currentUser: User;
+  private currentUser: User;
   @Input() projects: any;
 
-  constructor(private ngRedux: NgRedux<AppState>, private ds: DatesService) {}
+  constructor(public ngRedux: NgRedux<AppState>, public ds: DatesService) {}
 
   ngOnInit() {
     this.ngRedux.dispatch({type: 'SET_CURRENT_DAY'});
@@ -66,7 +66,7 @@ export class DayReportComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeView(input: string) {
+  protected changeView(input: string) {
     this.viewToggle = input;
   }
 

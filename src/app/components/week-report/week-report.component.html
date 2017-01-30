@@ -22,7 +22,7 @@
               </li>
               <li class="calendar-week__year_last" [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
                   (click)="changeYear(currentDay.year() + 1)">
-                <a> {{currentDay.year() + 1}} </a>
+                <a>{{currentDay.year() + 1}}</a>
               </li>
             </ul>
           </div>
@@ -56,7 +56,7 @@
                 [ngClass]="{'calendar-week__calendar-week-last': last}"
               >
                 <ul>
-                  <li *ngFor="let day of weekArray"> {{day.format('dd')}}
+                  <li *ngFor="let day of weekArray">{{day.format('dd')}}
                     <button
                       class="calendar-week__calendar-btn"
                       [ngClass]="{'calendar-week__calendar-btn--active': today.format('DD-MM-YY') == day.format('DD-MM-YY') }"
