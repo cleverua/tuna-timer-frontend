@@ -1,0 +1,176 @@
+<div id="wrapper">
+
+  <app-aside></app-aside>
+
+  <div id="main-content">
+    <main class="main main-calendar">
+      <div class="fluid-container">
+        <div class="calendar-week">
+          <div class="calendar-week__top">
+            <ul>
+              <li class="calendar-week__year">
+                <a (click)="changeYear(1)">{{currentDay.year() - 1}}</a>
+              </li>
+              <li
+                *ngFor="let monthName of monthsArray; let i = index"
+                [ngClass]="{'calendar-week--active': i == currentDay.month(),
+                            'calendar-week__future': futureMonth(i) }"
+                (click)="changeMonth(i)">
+                <a>{{monthName}}</a>
+              </li>
+              <li class="calendar-week__year_last"
+                  [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
+                  (click)="changeYear(1)">
+                <a>{{currentDay.year() + 1}}</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="calendar-week__calendar">
+            <h1 class="calendar-week__calendar-title">{{currentDay.format("MMMM DD")}}</h1>
+
+            <nav class="calendar-week__calendar-nav">
+              <ul>
+                <ng-container
+                  *ngIf="showTodayButton()">
+                  <li (click)="changeDate(today)">
+                    <a>Today</a>
+                  </li>
+                </ng-container>
+
+                <li [routerLink]="['../day-report']">
+                  <a>Day</a>
+                </li>
+
+                <li class="active">
+                  <a>Week</a>
+                </li>
+              </ul>
+            </nav>
+
+            <div class="calendar-week__calendar-holder" >
+              <div
+                class="calendar-week__calendar-week calendar-week__active-week"
+                *ngFor="let weekArray of arrayDaysInMonth; let last = last"
+                [ngClass]="{'calendar-week__calendar-week-last': last}"
+              >
+                <ul>
+                  <li *ngFor="let day of weekArray">{{day.format('dd')}}
+                    <button
+                      class="calendar-week__calendar-btn"
+                      [ngClass]="{'calendar-week__calendar-btn--active': today.format('DD-MM-YY') == day.format('DD-MM-YY') }"
+                      (click)="changeDate(day)"
+                    >
+                      {{day.format('D')}}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <table class="ccalendar__week-table">
+            <tr class="ccalendar__week-table-days">
+              <td>Monday</td>
+              <td>Tuesday</td>
+              <td>Wednesday</td>
+              <td>Thursday</td>
+              <td>Friday</td>
+              <td>Saturday</td>
+              <td>Sunday</td>
+            </tr>
+
+            <ng-container *ngFor="let weekArray of arrayForTilesOfMonth">
+
+              <!--Show week-report template - toggle week-report-->
+              <ng-container *ngIf="viewToggle == 'week'">
+                <tr
+                  class="calendar-week__sector-static"
+                  [ngClass]="{ 'calendar-week__sector': showTimers(weekArray) }"
+                >
+                  <td
+                    *ngFor="let day of weekArray"
+                    [ngClass]="{ 'month-table__item_new': day.format('MM') != currentDay.format('MM') }"
+                  >
+                    <!--active week-report-->
+                    <ng-container *ngIf="showTimers(weekArray)">
+                      <div>
+                        <h5>{{day.format('D')}}</h5>
+                        <button class="tuna-timer-btn">#tuna-timer</button>
+                        <h6>Total: 8:00 h</h6>
+                      </div>
+                    </ng-container>     <!--end active week-report-->
+
+                    <!--another weeks-->
+                    <ng-container *ngIf="!showTimers(weekArray)">
+                      <h5>{{day.format('D')}}</h5>
+                      <button
+                        class="calendar-week__sector-btn"
+                        (click)="changeDate(day)"
+                      >
+                        <span class="orange-border"></span>
+                        4:29</button>
+                    </ng-container>     <!--end another weeks-->
+                  </td>
+                </tr>
+                <!--Week Total-->
+                <ng-container *ngIf="showTimers(weekArray)">
+                  <tr class="calendar-week__sector-total-col">
+                    <td colspan="3" class="calendar-week__sector-total">
+                      <div class="calendar-day__total-col">
+                        <ul class="calendar-day__total-nav">
+                          <li><a href="#">Print report</a></li>
+                          <li><a href="#">Export report</a></li>
+                        </ul>
+                      </div>
+                    </td>
+                    <td colspan="4" class="calendar-week__sector-total">
+                      <h2>Weekly hours Total: 32:13 h</h2>
+                    </td>
+                  </tr>
+                </ng-container>
+              </ng-container>     <!--end toggle week-report-->
+
+              <!--show month template - toggle month-->
+              <ng-container *ngIf="viewToggle == 'month'">
+                <tr class="month-table__col" >
+                  <td *ngFor="let day of weekArray"
+                      [ngClass]="{'month-table__item_new': day.format('MM') != currentDay.format('MM') }"
+                  >
+                    <div>
+                      <h5>{{day.format('D')}}</h5>
+                      <button
+                        class="month-table__btn"
+                        (click)="changeDate(day)"
+                      >
+                        <span class="month-table__btn_orange"></span>
+                        <span class="month-table__btn_gray"></span>
+                        3:50
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>   <!--end toggle month-->
+            </ng-container>
+
+            <ng-container *ngIf="viewToggle == 'month'">
+              <tr class="calendar-week__sector-total-col">
+                <td colspan="3" class="calendar-week__sector-total">
+                  <div class="calendar-day__total-col">
+                    <ul class="calendar-day__total-nav">
+                      <li><a href="#">Print report</a></li>
+                      <li><a href="#">Export report</a></li>
+                    </ul>
+                  </div>
+                </td>
+                <td colspan="4" class="calendar-week__sector-total">
+                  <h2>Month hours Total: 32:13 h</h2>
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

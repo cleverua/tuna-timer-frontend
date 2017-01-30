@@ -1,110 +1,48 @@
 <div id="wrapper">
-  <aside id="sidebar">
-    <div class="sidebar-header">
-      <div class="header__user">
-        <form>
-          <select>
-            <option>TunaTimerDevelop</option>
-            <option>@ Sergey_Sokolenko</option>
-            <option>@ Artem_Zhuravlev</option>
-            <option>@ Ivan_Ivanov</option>
-          </select>
-        </form>
-      </div>
-      <div class="sidebar-total">
-        <h3 class="sidebar-total__title">Your total for today is </h3>
-        <h4 class="sidebar-total__hour">8:20 <span>h</span></h4>
-        <button class="sidebar__task_btn">ADD TASK</button>
-      </div>
-    </div>
 
-    <ul class="sidebar-tabs">
-      <li><a href="#"><i class="fa fa-clock-o" aria-hidden="true"></i>
-        Status</a></li>
-      <li class="sidebar-tabs__active"><a href="#"><i class="fa fa-bullhorn" aria-hidden="true"></i>
-        Report</a></li>
-    </ul>
-    <div class="sidebar-chanells">
-      <h3 class="sidebar-chanells__title"><i class="fa fa-code-fork" aria-hidden="true"></i> Chanel</h3>
-      <div class="sidebar-chanells__nav">
-        <form action="">
-          <div class="sidebar-chanells__nav-col">
-            <label for="ui_ux" class="ui_ux">#ui_ux</label>
-            <input type="checkbox"  class="checkbox" id="ui_ux">
-          </div>
-          <div class="sidebar-chanells__nav-col">
-            <label for="useful-links" class="useful-links">#useful-links</label>
-            <input type="checkbox"  class="checkbox" id="useful-links">
-          </div>
-          <div class="sidebar-chanells__nav-col">
-            <label for="tuna-timer" class="tuna-timer">#tuna-timer</label>
-            <input type="checkbox"  class="checkbox" id="tuna-timer">
-          </div>
-          <div class="sidebar-chanells__nav-col">
-            <label for="tuna-timer_dev" class="tuna-timer_dev">#tuna-timer_dev</label>
-            <input type="checkbox"  class="checkbox" id="tuna-timer_dev">
-          </div>
-        </form>
-      </div>
-    </div>
+  <app-aside></app-aside>
 
-    <button class="sidebar-chanells-btn">+ Add new chanel</button>
-    <div class="sidebar-color">
-      <!-- 			<h3 class="sidebar-color__title"><i class="fa fa-paint-brush" aria-hidden="true"></i> Color scheme</h3> -->
-      <div class="sidebar-color__nav">
-        <ul>
-          <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
-          <li><a href="#"></a></li>
-        </ul>
-      </div>
-    </div>
-    <h3 class="footer-title">(c) CleverUA</h3>
-  </aside>
   <div id="main-content">
-
     <main class="main main-calendar">
       <div class="fluid-container">
         <div class="calendar-week">
           <div class="calendar-week__top">
             <ul>
               <li class="calendar-week__year">
-                <a (click)="changeYear(currentDay.year() - 1)">
-                  {{currentDay.year() - 1}}
-                </a>
+                <a (click)="changeYear(-1)">{{currentDay.year() - 1}}</a>
               </li>
               <li
                 *ngFor="let monthName of monthsArray; let i = index"
                 [ngClass]="{'calendar-week--active': i == currentDay.month(),
                             'calendar-week__future': futureMonth(i) }"
-                (click)="changeMonth(i); changeView('month')">
-                <a>{{ monthName }}</a>
+                (click)="changeMonth(i)">
+                <a>{{monthName}}</a>
               </li>
-                <li [ngClass]="{ 'calendar-week__year_last': currentDay.year() >= today.year(),
-                                'calendar-week__year': currentDay.year() < today.year() }"
-                    (click)="changeYear(currentDay.year() + 1)">
-                  <a> {{currentDay.year() + 1}} </a>
-                </li>
+              <li class="calendar-week__year_last"
+                  [ngClass]="{ 'calendar-week__year_next': currentDay.year() < today.year() }"
+                  (click)="changeYear(1)">
+                <a>{{currentDay.year() + 1}}</a>
+              </li>
             </ul>
           </div>
 
           <div class="calendar-week__calendar">
-            <h1 class="calendar-week__calendar-title">{{currentDay.format("MMMM DD") }}</h1>
+            <h1 class="calendar-week__calendar-title">{{currentDay.format("MMMM DD")}}</h1>
 
             <nav class="calendar-week__calendar-nav">
               <ul>
                 <ng-container
-                  *ngIf=" showTodayButton() ">
-                  <li (click)="changeDate(today.format('DD-MM-YY')); changeView('day')">
+                  *ngIf="showTodayButton()">
+                  <li (click)="changeDate(today)">
                     <a>Today</a>
                   </li>
                 </ng-container>
 
-                <li [ngClass]="{'active': viewToggle == 'day'}" (click)="changeView('day')">
+                <li class="active">
                   <a>Day</a>
                 </li>
 
-                <li [ngClass]="{'active': viewToggle == 'week'}" (click)="changeView('week')">
+                <li [routerLink]="['../week-report']">
                   <a>Week</a>
                 </li>
               </ul>
@@ -117,11 +55,11 @@
                 [ngClass]="{'calendar-week__calendar-week-last': last}"
               >
                 <ul>
-                  <li *ngFor="let day of weekArray"> {{day.format('dd')}}
+                  <li *ngFor="let day of weekArray">{{day.format('dd')}}
                     <button
                       class="calendar-week__calendar-btn"
                       [ngClass]="{'calendar-week__calendar-btn--active': today.format('DD-MM-YY') == day.format('DD-MM-YY') }"
-                      (click)="changeDate(day.format('DD-MM-YY')); checkToggle()"
+                      (click)="changeDate(day);"
                     >
                       {{day.format('D')}}
                     </button>
@@ -152,11 +90,12 @@
                                     'month-table__item_new': day.format('MM') != currentDay.format('MM') }">
                       <h5>{{day.format('D')}}</h5>
                       <button
-                        (click)="changeDate(day.format('DD-MM-YY')); changeView('day');"
+                        (click)="changeDate(day)"
                         [ngClass]="{ 'calendar-week__sector-btn': day.format('MM') == currentDay.format('MM')}"
                       >
                         <span class="orange-border"></span>
-                        7:00</button>
+                        7:00
+                      </button>
                     </td>
                   </ng-container>
                 </tr>
@@ -193,55 +132,6 @@
                 </ng-container>  <!--show area with tasks-->
               </ng-container>              <!--end toggle day-->
 
-              <!--Show week template - toggle week-->
-              <ng-container *ngIf="viewToggle == 'week'">
-                <tr
-                  class="calendar-week__sector-static"
-                  [ngClass]="{ 'calendar-week__sector': showTimers(weekArray) }"
-                >
-                  <td
-                    *ngFor="let day of weekArray"
-                    [ngClass]="{ 'month-table__item_new': day.format('MM') != currentDay.format('MM') }"
-                  >
-                    <!--active week-->
-                    <ng-container *ngIf="showTimers(weekArray)">
-                      <div>
-                        <h5>{{day.format('D')}}</h5>
-                          <button class="tuna-timer-btn">#tuna-timer</button>
-                          <h6>Total: 8:00 h</h6>
-                      </div>
-                    </ng-container>     <!--end active week-->
-
-                    <!--another weeks-->
-                    <ng-container *ngIf="!showTimers(weekArray)">
-                      <h5>{{day.format('D')}}</h5>
-                      <button
-                        class="calendar-week__sector-btn"
-                        (click)="changeDate(day.format('DD-MM-YY')); changeView('week')"
-                      >
-                        <span class="orange-border"></span>
-                        4:29</button>
-                    </ng-container>     <!--end another weeks-->
-                  </td>
-                </tr>
-                <!--Week Total-->
-                <ng-container *ngIf="showTimers(weekArray)">
-                  <tr class="calendar-week__sector-total-col">
-                    <td colspan="3" class="calendar-week__sector-total">
-                      <div class="calendar-day__total-col">
-                        <ul class="calendar-day__total-nav">
-                          <li><a href="#">Print report</a></li>
-                          <li><a href="#">Export report</a></li>
-                        </ul>
-                      </div>
-                    </td>
-                    <td colspan="4" class="calendar-week__sector-total">
-                      <h2>Weekly hours Total: 32:13 h</h2>
-                    </td>
-                  </tr>
-                </ng-container>
-              </ng-container>     <!--end toggle week-->
-
               <!--show month template - toggle month-->
               <ng-container *ngIf="viewToggle == 'month'">
                 <tr class="month-table__col" >
@@ -252,7 +142,7 @@
                       <h5>{{day.format('D')}}</h5>
                       <button
                         class="month-table__btn"
-                        (click)="changeDate(day.format('DD-MM-YY')); changeView('day')"
+                        (click)="changeDate(day)"
                       >
                         <span class="month-table__btn_orange"></span>
                         <span class="month-table__btn_gray"></span>
