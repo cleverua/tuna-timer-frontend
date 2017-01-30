@@ -9,7 +9,7 @@
           <div class="calendar-week__top">
             <ul>
               <li class="calendar-week__year">
-                <a (click)="changeYear(1)">{{currentDay.year() - 1}}</a>
+                <a (click)="changeYear(-1)">{{currentDay.year() - 1}}</a>
               </li>
               <li
                 *ngFor="let monthName of monthsArray; let i = index"
