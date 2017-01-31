@@ -77,6 +77,10 @@ export class ApiService {
     });
   }
 
+  getAuthHeaders() {
+    return this.headers;
+  }
+
   private extractData(res: Response) {
     let body = res.json();
     return body || { };

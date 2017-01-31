@@ -55,12 +55,16 @@ export class TimersService {
     );
   }
 
-  updateTimers() {
-    if (!this.canUpdate) { return }
-
-    this.apiService.getTimers().subscribe(
+  updateTimers(start: string = null, end: string = null) {
+    if (!this.canUpdate || !this.apiService.getAuthHeaders()) { return }
+    this.apiService.getTimers(start, end).subscribe(
       resp => {
-        let timers: Timer[] = resp.data.map(t => { return new Timer(t) });
+        let timers: Timer[];
+        if (resp.data) {
+          timers = resp.data.map(t => { return new Timer(t) });
+        } else {
+          timers = [];
+        }
         this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
       },
       err  => { this.setError(err) }
