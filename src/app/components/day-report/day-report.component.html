@@ -89,13 +89,14 @@
                     <td [ngClass]="{'calendar-day__event-desc--active': day.format('DD-MM-YY') == currentDay.format('DD-MM-YY'),
                                     'month-table__item_new': day.format('MM') != currentDay.format('MM') }">
                       <h5>{{day.format('D')}}</h5>
-                      <button
-                        (click)="changeDate(day)"
-                        [ngClass]="{ 'calendar-week__sector-btn': day.format('MM') == currentDay.format('MM')}"
+                      <span calendarButton
+                            *ngIf="monthStatistics"
+                            [day]="day"
+                            [currentDay]="currentDay"
+                            [monthStatistics]="monthStatistics"
+                            (click)="changeDate($event)"
                       >
-                        <span class="orange-border"></span>
-                        7:00
-                      </button>
+                      </span>
                     </td>
                   </ng-container>
                 </tr>
@@ -110,8 +111,8 @@
                         <app-timer-form *ngFor="let timer of timers"
                                         [timer]="timer"
                                         [projects]="projects"
-                                        [currentUser]="currentUser"
-                        ></app-timer-form>
+                                        [currentUser]="currentUser">
+                        </app-timer-form>
                       </div>
                       <!--TASKS-->
                     </td>

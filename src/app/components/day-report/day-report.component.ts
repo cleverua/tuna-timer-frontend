@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from "rxjs";
 import { NgRedux } from "ng2-redux";
 import * as moment from 'moment';
@@ -7,7 +7,8 @@ import { AppState } from "../../app.state";
 import { DatesService } from "../../services/dates.service";
 import { Timer } from "../../models/timer";
 import { User } from "../../models/user";
-import {TimersService} from "../../services/timers.service";
+import { TimersService } from "../../services/timers.service";
+import { ApiService } from "../../services/api.service";
 
 @Component({
   selector: 'app-day-report',
@@ -22,28 +23,46 @@ export class DayReportComponent implements OnInit, OnDestroy {
   protected arrayForTilesOfMonth: moment.Moment[][];
   protected subscription: Subscription;
   protected viewToggle: string = 'day';
+  protected monthStatistics: any[];
   private timers: Timer[];
 
   private currentUser: User;
   @Input() projects: any;
 
-  constructor(public ngRedux: NgRedux<AppState>, public ds: DatesService, private timersService: TimersService) {}
+  constructor(public ngRedux: NgRedux<AppState>,
+              public ds: DatesService,
+              private timersService: TimersService,
+              protected apiService: ApiService) {}
 
   ngOnInit() {
     this.ngRedux.dispatch({type: 'SET_CURRENT_DAY'});
     this.today = moment();
     this.subscription = this.ngRedux.select('currentDate').subscribe((currentDay: moment.Moment) => {
+      if (this.currentDay && this.currentDay.format('MM-YY') != currentDay.format('MM-YY')) {
+
+        console.log(this.currentDay.format('MM-YY'))
+        console.log(currentDay.format('MM-YY'))
+        this.getStatisticsData(currentDay);
+      }
       this.currentDay = currentDay;
       this.arrayDaysInMonth = this.ds.getMonthDays(this.currentDay.format('YYYY-MM'));
       this.arrayForTilesOfMonth = this.ds.getTilesForCalendar(this.arrayDaysInMonth);
-      this.timersService.updateTimers(this.currentDay.format('YYYY-MM-DD'), this.currentDay.format('YYYY-MM-DD'))
+      this.timersService.updateTimers(this.currentDay.format('YYYY-MM-DD'), this.currentDay.format('YYYY-MM-DD'));
     });
+    //TODO: move all subscription into Subscription array
     this.ngRedux.select('timers').subscribe((timers: Timer[]) => {
       this.timers = timers;
     });
     this.ngRedux.select('currentUser').subscribe((user: User) => {
       this.currentUser = user;
     });
+
+    //TODO: Subscribe on statistics data
+    this.getStatisticsData();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   changeDate(date: moment.Moment) {
@@ -83,7 +102,18 @@ export class DayReportComponent implements OnInit, OnDestroy {
       || this.currentDay.format('YYYY') != this.today.format('YYYY')
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  getStatisticsData(currentDay: moment.Moment = null) {
+    if (this.apiService.getAuthHeaders()) {
+      let date = currentDay || this.currentDay;
+      this.apiService.getMonthStatistics(date.utc().format('YYYY-M') + "-1").subscribe(
+        resp => {
+          // TODO Place it to the store!!!
+          this.monthStatistics = resp.data || [];
+        },
+        err  => {
+          this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
+        }
+      );
+    }
   }
 }

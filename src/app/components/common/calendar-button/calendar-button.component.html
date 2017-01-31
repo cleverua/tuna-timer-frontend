@@ -1,0 +1,7 @@
+<button
+  [ngClass]="{'calendar-week__sector-btn': checkClass()}"
+  (click)="clickHandler()"
+>
+  <span *ngFor="let names of statistic?.projects_names" class="orange-border"></span>
+  {{statistic?.minutes | minToHours}}
+</button>

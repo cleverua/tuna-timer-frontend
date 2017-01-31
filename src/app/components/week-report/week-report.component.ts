@@ -5,7 +5,8 @@ import * as moment from 'moment';
 import { AppState } from "../../app.state";
 import { DatesService } from "../../services/dates.service";
 import { DayReportComponent } from "../day-report/day-report.component";
-import {TimersService} from "../../services/timers.service";
+import { TimersService } from "../../services/timers.service";
+import { ApiService } from "../../services/api.service";
 
 @Component({
   selector: 'app-week-report',
@@ -14,8 +15,8 @@ import {TimersService} from "../../services/timers.service";
 })
 export class WeekReportComponent extends DayReportComponent implements OnInit, OnDestroy {
 
-  constructor(ngRedux: NgRedux<AppState>, ds: DatesService, timersService: TimersService) {
-    super(ngRedux, ds, timersService);
+  constructor(ngRedux: NgRedux<AppState>, ds: DatesService, timersService: TimersService, apiService: ApiService) {
+    super(ngRedux, ds, timersService, apiService);
     this.viewToggle = 'week'
   }
 

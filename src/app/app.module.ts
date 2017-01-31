@@ -30,6 +30,7 @@ import { DropdownComponent } from './components/common/dropdown/dropdown.compone
 import {DayReportComponent} from "./components/day-report/day-report.component";
 import {WeekReportComponent} from "./components/week-report/week-report.component";
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CalendarButtonComponent } from './components/common/calendar-button/calendar-button.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     DropdownComponent,
     DayReportComponent,
     WeekReportComponent,
-    SidebarComponent
+    SidebarComponent,
+    CalendarButtonComponent
   ],
   imports: [
     BrowserModule,
