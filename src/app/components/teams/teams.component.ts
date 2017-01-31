@@ -66,6 +66,7 @@ export class TeamsComponent implements OnInit {
         //TODO put projects to store(if we need that)
         this.projects = resp.data;
         this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-projects'});
+        // console.log(this.projects);
       },
       err  => {
         this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
