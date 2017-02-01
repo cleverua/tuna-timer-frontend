@@ -9,6 +9,7 @@ import { Timer } from "../../models/timer";
 import { User } from "../../models/user";
 import { TimersService } from "../../services/timers.service";
 import { Project } from "../../models/project";
+import {ApiService} from "../../services/api.service";
 
 @Component({
   selector: 'app-day-report',
@@ -28,19 +29,16 @@ export class DayReportComponent implements OnInit, OnDestroy {
   private currentUser: User;
   private projects: Project[];
 
-  constructor(public ngRedux: NgRedux<AppState>, public ds: DatesService, private timersService: TimersService) {}
+  constructor(public ngRedux: NgRedux<AppState>, public ds: DatesService, private timersService: TimersService, private api: ApiService) {}
 
   ngOnInit() {
-    this.ngRedux.dispatch({type: 'SET_CURRENT_DAY'});
-
-    this.ngRedux.dispatch({type: 'SET_PROJECTS_FOR_MONTH'});
 
     this.today = moment();
     this.subscription = this.ngRedux.select('currentDate').subscribe((currentDay: moment.Moment) => {
       this.currentDay = currentDay;
       this.arrayDaysInMonth = this.ds.getMonthDays(this.currentDay.format('YYYY-MM'));
       this.arrayForTilesOfMonth = this.ds.getTilesForCalendar(this.arrayDaysInMonth);
-      this.timersService.updateTimers(this.currentDay.format('YYYY-MM-DD'), this.currentDay.format('YYYY-MM-DD'))
+      this.timersService.updateTimers(this.currentDay.format('YYYY-MM-DD'), this.currentDay.format('YYYY-MM-DD'));
     });
     this.ngRedux.select('timers').subscribe((timers: Timer[]) => {
       this.timers = timers;
@@ -51,7 +49,6 @@ export class DayReportComponent implements OnInit, OnDestroy {
     this.ngRedux.select('projects').subscribe((projects: Project[]) => {
       this.projects = projects;
     });
-    console.log(this.projects);
   }
 
   changeDate(date: moment.Moment) {

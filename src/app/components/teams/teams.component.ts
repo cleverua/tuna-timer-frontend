@@ -6,6 +6,7 @@ import { AppState } from "../../app.state";
 import { User } from "../../models/user";
 import { ApiService } from "../../services/api.service";
 import { Timer } from "../../models/timer";
+import { Project } from "../../models/project";
 
 @Component({
   selector: 'app-team',
@@ -52,6 +53,8 @@ export class TeamsComponent implements OnInit {
         let timersData: Timer[] = resp.data || [];
         let timers = timersData.map(t => { return new Timer(t) });
 
+        this.updateProjects();
+        this.ngRedux.dispatch({type: 'SET_CURRENT_DAY'});
         this.ngRedux.dispatch({type: 'SET_TIMERS', timers: timers});
         this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-user'});
         this.ngRedux.dispatch({type: 'BOOTSTRAP_ITEM_COMPLETED', itemName: 'load-tasks'});
@@ -71,5 +74,21 @@ export class TeamsComponent implements OnInit {
       err  => {
         this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err});
       });
+  }
+
+  private updateProjects() {
+    if (!this.apiService.getAuthHeaders()) { return }
+    this.apiService.getProjects().subscribe(
+      resp => {
+        let projects: Project[];
+        if (resp.data) {
+          projects = resp.data.map(p => { return new Project(p) });
+        } else {
+          projects = [];
+        }
+        this.ngRedux.dispatch({type: 'SET_PROJECTS_FOR_MONTH', projects: projects});
+      },
+      err  => { this.ngRedux.dispatch({type: 'SET_APP_ERROR', appError: err}) }
+    );
   }
 }

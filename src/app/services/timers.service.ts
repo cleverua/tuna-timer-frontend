@@ -4,6 +4,7 @@ import { NgRedux } from 'ng2-redux';
 import { ApiService } from "./api.service";
 import { AppState } from '../app.state';
 import { Timer } from "../models/timer";
+import {Project} from "../models/project";
 
 
 @Injectable()
@@ -70,6 +71,8 @@ export class TimersService {
       err  => { this.setError(err) }
     );
   }
+
+
 
   disableUpdate() {
     this.canUpdate = false;
